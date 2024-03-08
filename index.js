@@ -1,18 +1,15 @@
+import config from './config.js';
+
 // JavaScript код для отправки формы
 document.getElementById('loginForm').addEventListener('submit', function(event) {
-  require('dotenv').config();
-  const apiServerUrl = process.env.API_SERVER_URL;
-  console.log("test");
-  console.log(apiServerUrl);
-
   event.preventDefault(); // Предотвращаем стандартное поведение формы
-
   // Получаем значения из полей формы
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
   // Отправляем запрос на сервер
-  fetch( "http://192.168.0.140:8080/user_login", {
+  //fetch( "http://192.168.0.140:8080/user_login", {
+  fetch(`${config.ApiUrl}/user_login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
