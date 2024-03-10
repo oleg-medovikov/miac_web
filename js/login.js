@@ -1,4 +1,4 @@
-import config from './config.js';
+import config from '../config.js';
 
 // JavaScript код для отправки формы
 document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -8,7 +8,6 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   const password = document.getElementById('password').value;
 
   // Отправляем запрос на сервер
-  //fetch( "http://192.168.0.140:8080/user_login", {
   fetch(`${config.ApiUrl}/user_login`, {
     method: 'POST',
     headers: {
@@ -26,9 +25,13 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     return response.json();
   })
   .then(data => {
-    console.log(data);
+    //console.log(data);
     // Обработка данных ответа
-    alert('Login successful!');
+    //alert('Login successful!');
+    // Сохраняем токен в localStorage
+    localStorage.setItem('authToken', data.token);
+    // Перенаправляем пользователя на страницу main
+    window.location.href = '../html/main.html';
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
