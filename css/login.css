@@ -42,3 +42,11 @@ body {
 #loginForm input[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+.username{
+  width: 20vh;
+}
+
+.password{
+  width: 20vh;
+}
