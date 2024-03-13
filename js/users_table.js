@@ -64,6 +64,7 @@ document.getElementById('showUsersLink').addEventListener('click', function(even
         console.error('Ошибка при загрузке пользователей:', error);
       });
   });
+  
 
   // Объявляем переменную modal в глобальной области видимости
 var modal;
@@ -85,8 +86,6 @@ function openEditUserModal(user) {
   // Отображаем модальное окно
   modal.style.display = 'block';
 }
-
-import config from '../config.js';
 
 // Получаем кнопку закрытия модального окна
 var closeBtn = document.getElementById("closeModalButton");

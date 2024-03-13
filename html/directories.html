@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Директории</title>
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/main.css"> <!-- Подключение CSS -->
+    <link rel="stylesheet" href="../css/directories.css">
+</head>
+<body>
+            <header id="header" class="header">
+                <div class="container header__container">
+                    <a href="https://spbmiac.ru/" class="logo_top">
+                        <img class="logo__img" src="../img/miac.png" alt="Логотип">
+                    </a>
+                    <nav class="menu_top">
+                        <ul class="menu__list">
+                            <li id="UserFIO" class="menu__item"></li>
+            
+                            <li id="UserGroups" class="menu__item"></li>
+            
+                         <!-- <div id="usersTableContainer">
+                            <li id="UserGroups" class="menu__item"></li>
+                          </div>-->
+            
+                            <li class="menu__item">
+                              <a id="logoutButton" href="#">Выход</a>        
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+            
+            <div class="menu">
+                <div class="title">
+                <h2>НАВИГАЦИЯ</h2>
+              </div>
+                <div class="list-menu">
+                    <ul>
+                        <li><a href="main.html">Главная</a></li>
+                        <li><a href="users.html" id="showUsersLink">Пользователи</a></li>
+                        <li><a href="commands.html">Команды</a></li>
+                        <li><a href="directories.html">Директории</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu">
+                    <p>СПб ГБУЗ МИАЦ</p>
+                </div>
+            </div>
+            
+            <div class="content">
+                <h1 class="welcome">Добро пожаловать!</h1>
+                <p class="welcome-descr">Это страница директорий.</p>
+            </div>
+            
+            <script type="module" src="../js/main.js"></script>
+            <script type="module" src="../js/logout.js"></script>
+            <script type="module" src="../js/users_table.js"></script>
+
+</body>
+</html>
