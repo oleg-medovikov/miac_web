@@ -1,8 +1,4 @@
 import config from '../config.js';
-
-// загружаем таблицу пользователей
-document.getElementById('showUsersLink').addEventListener('click', function(event) {
-    event.preventDefault(); // Предотвращаем переход по ссылке
     // Отправляем запрос к API
     fetch(`${config.ApiUrl}/user_get_all`, {
       method: 'GET',
@@ -63,7 +59,6 @@ document.getElementById('showUsersLink').addEventListener('click', function(even
       .catch(error => {
         console.error('Ошибка при загрузке пользователей:', error);
       });
-  });
   
 
   // Объявляем переменную modal в глобальной области видимости

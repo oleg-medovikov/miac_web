@@ -52,3 +52,13 @@ th{
 	border-radius: 10px;
 	padding-left: 7px;
 }
+
+.add-user-btn{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+
+.add-link{
+	width: 40px;
+}
