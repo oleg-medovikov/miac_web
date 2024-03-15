@@ -42,11 +42,29 @@ th{
 	padding-top: 20px;
 }
 
+.edit-user {
+	color: rgb(8, 8, 8); /* Белый цвет текста */
+	border: none; /* Без границ */
+	padding: 5px 8px; /* Внутренние отступы */
+	text-align: center; /* Выравнивание текста по центру */
+	text-decoration: none; /* Удаление подчёркивания */
+	display: inline-block; /* Отображение кнопки в строке с другими элементами */
+	font-size: 16px; /* Размер текста */
+	margin: 4px 2px; /* Внешние отступы */
+	cursor: pointer; /* Изменение курсора при наведении */
+	border-radius: 5px; /* Скругление углов */
+	transition: background-color 0.3s ease; /* Плавное изменение цвета фона */
+  }
+  
+  .edit-user:hover {
+	background-color: #d3d4d5; /* Светлее синий цвет при наведении */
+  }
+
 .minimalist-button {
 	background-color: transparent;
 	border: none; 
 	color: #000; 
-	padding: 10px 20px; 
+	padding: 8px 20px; 
 	text-align: center; 
 	text-decoration: none;
 	display: inline-block; 
@@ -57,7 +75,7 @@ th{
 	border-radius: 12px;
 }
   
-  .minimalist-button:hover {
+.minimalist-button:hover {
 	background-color: #8c8c8c;
 	color: white; 
 }
@@ -80,7 +98,7 @@ th{
 }
 
 .modal {
-	display: none; /* Скрываем модальное окно по умолчанию */
+	display: none; 
 	position: fixed;
 	z-index: 1;
 	left: 0;
@@ -89,100 +107,180 @@ th{
 	height: 100%;
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.4);
-  }
+}
   
-  .modal-content {
+.modal-content {
 	background-color: #fefefe;
 	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #888;
 	width: 80%;
-	max-width: 600px; /* Ограничиваем максимальную ширину */
+	max-width: 600px; 
 	border-radius: 4px;
 	position: relative;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+}
   
-  .modal-header {
+.modal-header {
 	padding: 10px;
-	background-color: #f8f9fa;
+	/* background-color: #f8f9fa; */
 	border-bottom: 1px solid #e9ecef;
-  }
+}
   
-  .modal-header h2 {
+.modal-header h2 {
 	margin: 0;
-  }
+}
   
-  .close {
+.close {
 	color: #aaa;
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
 	cursor: pointer;
-  }
+}
   
-  .close:hover,
-  .close:focus {
+.close:hover,
+.close:focus {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
-  }
+}
   
-  .modal-body {
+.modal-body {
 	padding: 20px;
-  }
+}
   
-  .form-group {
+.form-group {
 	margin-bottom: 15px;
-  }
+}
   
-  .form-group label {
+.form-group label {
 	display: block;
 	margin-bottom: 5px;
-  }
+}
   
-  .form-control {
+.form-control {
 	width: 100%;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
-  }
+}
   
-  .modal-footer {
+.modal-footer {
 	padding: 10px;
-	background-color: #f8f9fa;
+	/* background-color: #f8f9fa; */
 	border-top: 1px solid #e9ecef;
 	text-align: right;
-  }
+}
   
-  .btn {
+.btn {
 	padding: 10px 15px;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
 	color: white;
 	margin-left: 10px;
-  }
+}
   
-  #closeModalButton {
+#closeModalButton {
 	background-color: #ccc;
-  }
+}
   
-  #okBtn {
+#okBtn {
 	background-color: #4CAF50;
-  }
+}
   
-  /* Стили для центрирования модального окна */
-  .modal {
+.modal {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+  
+@media screen and (max-width: 600px) {
+	.modal-content {
+	  width: 80%;
+}
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+	width: 100%;
+  	padding: 10px;
+  	border: 1px solid #ccc;
+  	border-radius: 4px;
+  	box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  	outline: none;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
+  	color: #aaa;
+}
+
+select {
+  	appearance: none;
+  	-webkit-appearance: none;
+  	-moz-appearance: none;
+  	background-color: #fff;
+  	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23444'><polygon points='0,0 100,0 50,50'/></svg>");
+  	background-position: right 10px top 50%;
+  	background-repeat: no-repeat;
+  	background-size: 10px;
+}
+
+select:focus {
+  	outline: none;
+}
+
+.close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	overflow: hidden;
+	transition: background-color 0.3s;
   }
   
-  /* Дополнительные стили для адаптивности */
-  @media screen and (max-width: 600px) {
-	.modal-content {
-	  width: 90%;
-	}
+  .close-button:hover {
+	background-color: transparent;
+  }
+  
+  .close-button:before,
+  .close-button:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 2px;
+	width: 12px;
+	background-color: black;
+	transition: background-color 0.3s;
+  }
+  
+  .close-button:before {
+	transform: translate(-50%, -50%) rotate(45deg);
+  }
+  
+  .close-button:after {
+	transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  
+  .close-button:hover:before,
+  .close-button:hover:after {
+	background-color: white;
   }

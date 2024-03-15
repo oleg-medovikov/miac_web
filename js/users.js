@@ -132,6 +132,7 @@ if (user) {
   document.getElementById('description').value = user.description || '';
   document.getElementById('active').value = user.active ? 'true' : 'false';
   document.getElementById('updateModalButton').style.display = 'block';
+  document.getElementById('UserModalTitle').innerHTML = 'Редактировать'
 } else {
   // Если user не определен, очищаем поля формы
   document.getElementById('guid').value = '';
@@ -142,6 +143,7 @@ if (user) {
   document.getElementById('description').value = '';
   document.getElementById('active').value = ''; 
   document.getElementById('createModalButton').style.display = 'block';
+  document.getElementById('UserModalTitle').innerHTML = 'Добавить пользователя'
 }
   // Отображаем модальное окно
   modal.style.display = 'block';

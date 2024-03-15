@@ -52,8 +52,8 @@
 </div>
 
 <div class="content">
-  <h1 class="welcome">Добро пожаловать!</h1>
-  <p class="welcome-descr">Это страница пользователей.</p>
+  <h1 class="welcome">Таблица пользователей</h1>
+  <p class="welcome-descr">Сотрудники МИАЦ</p>
 
   <div class="users-table" id="usersTableContainer"></div>
 
@@ -63,39 +63,34 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Редактировать пользователя</h4>
+          <h4 class="modal-title" id="UserModalTitle">Добавить пользователя</h4>
         </div>
         <div class="modal-body">
           <form id="editUserForm">
             <input type="hidden" id="guid" name="guid">
             <div class="form-group">
-              <label for="tg_id">Telegram ID:</label>
-              <input type="number" class="form-control" id="tg_id" name="tg_id">
+              <input type="number" id="tg_id" name="tg_id" placeholder="Telegram ID">
             </div>
 
             <div class="form-group">
-              <label for="username">Имя пользователя:</label>
-              <input type="text" class="form-control" id="username" name="username">
+              <input type="text" id="username" name="username" placeholder="Имя пользователя">
             </div>
 
             <div class="form-group">
-              <label for="fio">ФИО:</label>
-              <input type="text" class="form-control" id="fio" name="fio">
+              <input type="text" id="fio" name="fio" placeholder="ФИО">
             </div>
 
             <div class="form-group">
-              <label for="groups">Группы:</label>  <!--сделать выпадающий список admin user добавить кнопку смены пароля-->
-              <input type="text" class="form-control" id="groups" name="groups">
+              <input type="text" id="groups" name="groups" placeholder="Группы">
             </div>
 
             <div class="form-group">
-              <label for="description">Описание:</label>
-              <textarea class="form-control" id="description" name="description"></textarea>
+              <textarea id="description" name="description" placeholder="Описание"></textarea>
             </div>
 
             <div class="form-group">
-              <label for="active">Активный:</label>
-              <select class="form-control" id="active" name="active">
+              <select id="active" name="active">
+                <option value="" disabled selected>Активный</option>
                 <option value="true">Да</option>
                 <option value="false">Нет</option>
               </select>
@@ -104,9 +99,9 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="minimalist-button" data-dismiss="modal" id="closeModalButton">Закрыть</button>
-          <button type="button" class="minimalist-button" id="updateModalButton" style="display: none;">Обновить</button>
-          <button type="button" class="minimalist-button" id="createModalButton" style="display: none;">Создать</button>
+          <button type="button" class="close-button" id="closeModalButton"></button>
+          <button type="button" class="minimalist-button" id="updateModalButton" style="display: none;">Обновить</button> 
+          <button type="button" class="minimalist-button" id="createModalButton">Создать</button>
         </div>
       </div>
     </div>
