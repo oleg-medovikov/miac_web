@@ -5,6 +5,7 @@
 	list-style: none;
 	text-decoration: none;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	/* добавть ссылку на шрифт */
 }
 
 .content {
@@ -28,6 +29,7 @@ a {
 
 body {
     padding-top: 80px;
+	background: linear-gradient(to right, #f3964541, #00a5b735);
 	
 }
 
@@ -42,11 +44,12 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(248, 236, 197, 0.754);
+    background-color: rgba(247, 232, 203, 0.412);
     z-index: 9999;
     transition: box-shadow .3s;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .header__container {
@@ -78,6 +81,7 @@ body {
     list-style-type: none;
     padding: 0;
     margin: 0;
+	font-size: 18px;
 }
 
 .menu__item:not(:last-child) {
@@ -99,7 +103,6 @@ body {
 
 .sidebar {  
 	width: 200px;
-	background-color: #f8f8f8;
 	padding: 20px;
 }
 
@@ -159,7 +162,6 @@ body {
 	padding: 25vh 50px;
 	background: rgba(20, 20, 20, 0.5);
 	height: 100vh;
-	border-right: 7px solid #fcfffc;
 	position: fixed;
 	left: -320px;
 	transition: 0.4s ease;
@@ -196,3 +198,4 @@ body {
 .add-link{
 	width: 35px;
 } */
+

@@ -22,10 +22,6 @@
 
                 <li id="UserGroups" class="menu__item"></li>
 
-             <!-- <div id="usersTableContainer">
-                <li id="UserGroups" class="menu__item"></li>
-              </div>-->
-
                 <li class="menu__item underline">
                   <a id="logoutButton" href="#">Выход</a>        
                 </li>
@@ -53,39 +49,51 @@
 
 <div class="content">
   <h1 class="welcome">Командная таблица</h1>
-  <!-- <p class="welcome-descr">Команды МИАЦ</p> -->
 
-<div class="users-table" id="usersTableContainer"></div>
+<div class="users-table" id="commandTableContainer"></div>
 
 
   <!-- HTML для модального окна -->
-  <div id="editUserModal" class="modal fade" role="dialog" style="display: none;">
+  <div id="editCommandModal" class="modal fade" role="dialog" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="UserModalTitle">Добавить пользователя</h4>
+          <h4 class="modal-title" id="CommandModalTitle">Добавить пользователя</h4>
         </div>
         <div class="modal-body">
-          <form id="editUserForm">
-            <input type="hidden" id="guid" name="guid">
+          <form id="editCommandForm">
+            <input type="hidden" id="guid" name="guid"> 
+ 
             <div class="form-group">
-              <input type="number" id="tg_id" name="tg_id" placeholder="Telegram ID">
+              <input type="text" id="category" name="category" placeholder="Категория">
             </div>
 
             <div class="form-group">
-              <input type="text" id="username" name="username" placeholder="Имя пользователя">
+              <input type="text" id="name" name="name" placeholder="Название команды">
             </div>
 
             <div class="form-group">
-              <input type="text" id="fio" name="fio" placeholder="ФИО">
+              <input type="text" id="func" name="func" placeholder="Функция">
             </div>
 
             <div class="form-group">
-              <input type="text" id="groups" name="groups" placeholder="Группы">
+              <input type="text" id="arg" name="arg" placeholder="Аргументы">
             </div>
 
             <div class="form-group">
-              <textarea id="description" name="description" placeholder="Описание"></textarea>
+                <select id="active" name="active">
+                    <option value="" disabled selected>Возврат файлов</option>
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                  </select>
+            </div>
+
+            <div class="form-group">
+                <select id="active" name="active">
+                    <option value="" disabled selected>Спросить день</option>
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                  </select>
             </div>
 
             <div class="form-group">
@@ -108,12 +116,13 @@
   </div>
 </div>
 
-<div id="addUserModal" class="add-user-btn">
+<div id="addCommandModal" class="add-user-btn">
   <a href="#"><img class="add-link" src="../img/icon_add.png" alt="add"></a>
 </div>
 
 <script type="module" src="../js/logout.js"></script>
-<script type="module" src="../js/users.js"></script>
+<script type="module" src="../js/commands.js"></script>
+
 
 </body>
 </html>

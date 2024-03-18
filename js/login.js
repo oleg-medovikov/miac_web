@@ -2,8 +2,9 @@ import config from '../config.js';
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
   event.preventDefault(); 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  // const username = document.getElementById('username').value;
+  // const password = document.getElementById('password').value;
+
 
   fetch(`${config.ApiUrl}/user_login`, {
     method: 'POST',
@@ -11,8 +12,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ 
-      username: username,
-      password: password
+      username: event.target.username.value,
+      password: event.target.password.value
     })
   })
   .then(response => {

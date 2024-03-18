@@ -1,58 +1,59 @@
+import config from '../config.js';
+  
 // Проверяем наличие токена в localStorage
 if (!localStorage.getItem('authToken')) {
-    // Если токена нет, перенаправляем на страницу входа
-    window.location.href = '../html/login.html';
-  } else {
-    // Отправляем запрос к API для проверки токена
-    fetch(`${config.ApiUrl}/check_token`, {
-      method: 'GET',
-      headers: {
-        'Authorization': localStorage.getItem('authToken')
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (!data.token_valid) {
-        // Если токен не валиден, перенаправляем на страницу входа
-        window.location.href = '../html/login.html';
-      } else { // Если токен валидный - мы вытаскиваем пользователя
-        fetch(`${config.ApiUrl}/user_get`, { 
-          method: 'GET',
-          headers: {
-            'Authorization': localStorage.getItem('authToken')
-          }
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json(); // Преобразуем тело ответа в JSON
-        })
-        .then(data => {  
-          localStorage.setItem('fio', data.fio); 
-          localStorage.setItem('groups', data.groups);
-          document.getElementById('UserFIO').innerHTML = localStorage.getItem('fio');
-          document.getElementById('UserGroups').innerHTML = localStorage.getItem('groups');
-        })
-        .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
-        });
-      }
-    })
-    .catch(error => {
-      console.error('There was a problem with the fetch operation:', error);
-    });
-  }
-  
+  // Если токена нет, перенаправляем на страницу входа
+  window.location.href = '../html/login.html';
+} else {
+  // Отправляем запрос к API для проверки токена
+  fetch(`${config.ApiUrl}/check_token`, {
+    method: 'GET',
+    headers: {
+      'Authorization': localStorage.getItem('authToken')
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (!data.token_valid) {
+      // Если токен не валиден, перенаправляем на страницу входа
+      window.location.href = '../html/login.html';
+    } else { // Если токен валидный - мы вытаскиваем пользователя
+      fetch(`${config.ApiUrl}/user_get`, { 
+        method: 'GET',
+        headers: {
+          'Authorization': localStorage.getItem('authToken')
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Преобразуем тело ответа в JSON
+      })
+      .then(data => {  
+        localStorage.setItem('fio', data.fio); 
+        localStorage.setItem('groups', data.groups);
+        document.getElementById('UserFIO').innerHTML = localStorage.getItem('fio');
+        document.getElementById('UserGroups').innerHTML = localStorage.getItem('groups');
+      })
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
+    }
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+}
   
   
   // Отправляем запрос к API
-  fetch(`${config.ApiUrl}/user_get_all`, {
+  fetch(`${config.ApiUrl}/command_get_all`, {
     method: 'GET',
     headers: {
       'Authorization': localStorage.getItem('authToken')
@@ -60,46 +61,48 @@ if (!localStorage.getItem('authToken')) {
   })
     .then(response => response.json()) 
     .then(data => {
-    // Создаем таблицу пользователей
-    const usersTable = document.createElement('table');
-    usersTable.innerHTML = `
+    // Создаем таблицу команд
+    const commandTable = document.createElement('table');
+    commandTable.innerHTML = `
       <tr>
         <th>Категория</th>
         <th>Название команды</th>
         <th>Функция</th>
-        <th>Аргуманты</th>
-        <th>Описание</th>
-        <th>Активный</th>
+        <th>Аргументы</th>
+        <th>Возврат файлов</th>
+        <th>Спросить день</th>
+        <th>Активна</th>
         <th>Действие</th>
       </tr>
     `;
     // Добавляем строки с данными пользователей
-    data.forEach(user => {
+    data.forEach(command => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${user.tg_id}</td>
-        <td>${user.username}</td>
-        <td>${user.fio}</td>
-        <td>${user.groups}</td>
-        <td>${user.description}</td>
-        <td>${user.active ? 'Да' : 'Нет'}</td>
-        <td><button class="edit-user" data-guid="${user.guid}">Редактировать</button></td>
+        <td>${command.category}</td>
+        <td>${command.name}</td>
+        <td>${command.func}</td>   
+        <td>${command.arg}</td>
+        <td>${command.return_file}</td>
+        <td>${command.ask_day}</td>
+        <td>${command.active ? 'Да' : 'Нет'}</td>
+        <td><button class="edit-user" data-guid="${command.guid}">Редактировать</button></td>
       `;
-      usersTable.appendChild(row);
+      commandTable.appendChild(row);
     });
     // Отображаем таблицу пользователей
-    const usersTableContainer = document.getElementById('usersTableContainer');
-    usersTableContainer.innerHTML = ''; // Очищаем предыдущее содержимое
-    usersTableContainer.appendChild(usersTable);
+    const commandTableContainer = document.getElementById('commandTableContainer');
+    commandTableContainer.innerHTML = ''; // Очищаем предыдущее содержимое
+    commandTableContainer.appendChild(commandTable);
     // Добавляем обработчик события для кнопок редактирования
-    const editButtons = document.querySelectorAll('.edit-user');
+    const editButtons = document.querySelectorAll('.edit-command');
     editButtons.forEach(button => {
       button.addEventListener('click', function() {
         const guid = this.dataset.guid;
         // Находим полный объект пользователя по GUID
-        const user = data.find(user => user.guid === guid);
+        const command = data.find(command => command.guid === guid);
         // Открываем модальное окно с данными пользователя
-        openEditUserModal(user);
+        openEditCommandModal(command);
       });   
     });
    })
@@ -114,33 +117,35 @@ if (!localStorage.getItem('authToken')) {
   var modal;
   
   // Функция для открытия модального окна
-  function openEditUserModal(user) {
+  function openEditCommandModal(command) {
     // Получаем модальное окно
-    modal = document.getElementById('editUserModal');
+    modal = document.getElementById('editCommandModal');
   
-  // Проверяем, существует ли user
-  if (user) {
+  // Проверяем, существует ли command
+  if (command) {
     // Заполняем поля формы данными пользователя
-    document.getElementById('guid').value = user.guid || '';
-    document.getElementById('tg_id').value = user.tg_id || '';
-    document.getElementById('username').value = user.username || '';
-    document.getElementById('fio').value = user.fio || '';
-    document.getElementById('groups').value = user.groups || '';
-    document.getElementById('description').value = user.description || '';
-    document.getElementById('active').value = user.active ? 'true' : 'false';
+    document.getElementById('guid').value = command.guid || '';
+    document.getElementById('category').value = command.category || '';
+    document.getElementById('name').value = command.name || '';
+    document.getElementById('func').value = command.func || '';
+    document.getElementById('arg').value = command.arg || '';
+    document.getElementById('return_file').value = command.return_file || '';
+    document.getElementById('ask_day').value = command.ask_day || '';
+    document.getElementById('active').value = command.active ? 'true' : 'false';
     document.getElementById('updateModalButton').style.display = 'block';
-    document.getElementById('UserModalTitle').innerHTML = 'Редактировать'
+    document.getElementById('CommandModalTitle').innerHTML = 'Редактировать'
   } else {
-    // Если user не определен, очищаем поля формы
+    // Если command не определен, очищаем поля формы
     document.getElementById('guid').value = '';
-    document.getElementById('tg_id').value = '';
-    document.getElementById('username').value = '';
-    document.getElementById('fio').value = '';
-    document.getElementById('groups').value = '';
-    document.getElementById('description').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('func').value = '';
+    document.getElementById('arg').value = '';
+    document.getElementById('return_file').value = '';
+    document.getElementById('ask_day').value = '';
     document.getElementById('active').value = ''; 
     document.getElementById('createModalButton').style.display = 'block';
-    document.getElementById('UserModalTitle').innerHTML = 'Добавить пользователя'
+    document.getElementById('CommandModalTitle').innerHTML = 'Добавить пользователя'
   }
     // Отображаем модальное окно
     modal.style.display = 'block';
@@ -160,26 +165,28 @@ if (!localStorage.getItem('authToken')) {
   okBtn.addEventListener("click", function() {
    // Получаем данные из формы
     var guid = document.getElementById('guid').value;
-    var tg_id = document.getElementById('tg_id').value;
-    var username = document.getElementById('username').value;
-    var fio = document.getElementById('fio').value;
-    var groups = document.getElementById('groups').value;
-    var description = document.getElementById('description').value;
+    var category = document.getElementById('category').value;
+    var name = document.getElementById('name').value;
+    var func = document.getElementById('func').value;
+    var arg = document.getElementById('arg').value;
+    var return_file = document.getElementById('return_file').value;
+    var ask_day = document.getElementById('ask_day').value;
     var active = document.getElementById('active').value === 'true';
   
     // Создаем объект с данными   ВОПРОС
     var data = {
       guid: guid,
-      tg_id: parseInt(tg_id),
-      username: username,                  
-      fio: fio,
-      groups: groups,
-      description: description,
+      category: category,
+      name: parseInt(name), 
+      func: func,                 
+      arg: arg,
+      return_file: return_file,
+      ask_day: ask_day,
       active: active
     };
   
     // Отправляем запрос
-    fetch(`${config.ApiUrl}/user_update`, {
+    fetch(`${config.ApiUrl}/command_update`, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',
@@ -198,10 +205,10 @@ if (!localStorage.getItem('authToken')) {
   
     
   // Получаем кнопку открытия для создания пользователя
-  var addBtn = document.getElementById("addUserModal");
+  var addBtn = document.getElementById("addCommandModal");
     // Добавляем обработчик события на кнопку закрытия
   addBtn.addEventListener("click", function() {
-    openEditUserModal();
+    openEditCommandModal();
   });
   
   
@@ -209,31 +216,33 @@ if (!localStorage.getItem('authToken')) {
   var okBtn = document.getElementById("createModalButton");
   okBtn.addEventListener("click", function() {
    // Получаем данные из формы
-    var tg_id = document.getElementById('tg_id').value;
-    var username = document.getElementById('username').value;
-    var fio = document.getElementById('fio').value;
-    var groups = document.getElementById('groups').value;
-    var description = document.getElementById('description').value;
+    var category = document.getElementById('category').value;
+    var name = document.getElementById('name').value;
+    var func = document.getElementById('func').value;
+    var arg = document.getElementById('arg').value;
+    var return_file = document.getElementById('return_file').value;
+    var ask_day = document.getElementById('ask_day').value;
     var active = document.getElementById('active').value === 'true';
   
      // Проверяем, заполнены ли все поля
-     if (!tg_id || !username || !fio || !groups || !description) {
+     if (!category || !name || !func || !arg || !return_file || !ask_day) {
       alert('Все поля должны быть заполнены.');
       return; // Прекращаем выполнение функции, если какое-либо поле не заполнено
     }
   
     // Создаем объект с данными
     var data = {
-      tg_id: parseInt(tg_id),
-      username: username,
-      fio: fio,
-      groups: groups,
-      description: description,
-      active: active
+        category: category,
+        name: parseInt(name),
+        func: func,
+        arg: arg,
+        return_file: return_file,
+        ask_day: ask_day,
+        active: active
     };
   
     // Отправляем запрос
-    fetch(`${config.ApiUrl}/user_create`, {
+    fetch(`${config.ApiUrl}/command_create`, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',

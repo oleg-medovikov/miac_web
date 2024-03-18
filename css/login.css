@@ -11,6 +11,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(to right, #f3964541, #00a5b735);
+
 
 }
 
@@ -42,8 +44,7 @@ body {
   position: absolute;
   width: 80px;
   height: 200px;
-  background: linear-gradient(#ff966d, #fa538d, #89379c);
-  border-radius: 40px;
+  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 40px;
 }
 
 .design .pill-2 {
@@ -52,8 +53,7 @@ body {
   position: absolute;
   height: 450px;
   width: 220px;
-  background: linear-gradient(#ff966d, #fa538d, #89379c);
-  border-radius: 200px;
+  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 200px;
   border: 30px solid #e2c5e2;
 }
 
@@ -63,8 +63,7 @@ body {
   position: absolute;
   height: 200px;
   width: 100px;
-  background: linear-gradient(#ff966d, #fa538d, #89379c);
-  border-radius: 70px;
+  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 70px;
 }
 
 .design .pill-4 {
@@ -73,8 +72,7 @@ body {
   position: absolute;
   height: 300px;
   width: 120px;
-  background: linear-gradient(#ff966d, #fa538d);
-  border-radius: 70px;
+  background: linear-gradient(to right, #f39545, #00a6b7);  border-radius: 70px;
 }
 
 .login {
@@ -124,8 +122,7 @@ body {
   width: 116.7%;
   padding: 10px;
   color: white;
-  background: linear-gradient(to right, #ff966d, #fa538d, #89379c);
-  border: none;
+  background: linear-gradient(to right, #f39545, #00a6b7);  border: none;
   border-radius: 20px;
   cursor: pointer;
   margin-top: 10px;
