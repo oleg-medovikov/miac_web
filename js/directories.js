@@ -160,8 +160,8 @@ if (!localStorage.getItem('authToken')) {
     // Создаем объект с данными   ВОПРОС
     var data = {
         guid: guid,
-        directory: directory,
         name: name,
+        directory: directory,
         description: description,                 
         active: active
     };
@@ -203,7 +203,7 @@ if (!localStorage.getItem('authToken')) {
     var active = document.getElementById('active').value === 'true';
   
      // Проверяем, заполнены ли все поля
-     if (!directory || !description || !name) {
+     if (!name || !directory || !description) {
       alert('Все поля должны быть заполнены.');
       return; // Прекращаем выполнение функции, если какое-либо поле не заполнено
     }
@@ -230,6 +230,6 @@ if (!localStorage.getItem('authToken')) {
       console.log('Успешно:', data);
       // Здесь можно обработать ответ от сервера, например, обновить интерфейс пользователя
       modal.style.display = "none"; 
-      location.reload();
+    //   location.reload();
     });
   });

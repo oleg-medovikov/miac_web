@@ -86,7 +86,7 @@ if (!localStorage.getItem('authToken')) {
         <td>${command.arg}</td>
         <td>${command.return_file ? 'Да' : 'Нет'}</td>
         <td>${command.ask_day ? 'Да' : 'Нет'}</td>
-        <td>${user.description}</td>
+        <td>${command.description}</td>
         <td>${command.active ? 'Да' : 'Нет'}</td>
         <td><button class="edit-user" data-guid="${command.guid}">Редактировать</button></td>
       `;
@@ -263,6 +263,6 @@ if (!localStorage.getItem('authToken')) {
       console.log('Успешно:', data);
       // Здесь можно обработать ответ от сервера, например, обновить интерфейс пользователя
       modal.style.display = "none"; 
-      location.reload();
+    //   location.reload();
     });
   });

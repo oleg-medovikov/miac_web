@@ -4,8 +4,7 @@
 	box-sizing: border-box;
 	list-style: none;
 	text-decoration: none;
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-}
+	font-family: "Roboto", sans-serif;}
 
 .users-table {
 	display: flex;
