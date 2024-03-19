@@ -71,6 +71,7 @@ if (!localStorage.getItem('authToken')) {
         <th>Аргументы</th>
         <th>Возврат файлов</th>
         <th>Спросить день</th>
+        <th>Описание</th>
         <th>Активна</th>
         <th>Действие</th>
       </tr>
@@ -83,8 +84,9 @@ if (!localStorage.getItem('authToken')) {
         <td>${command.name}</td>
         <td>${command.func}</td>   
         <td>${command.arg}</td>
-        <td>${command.return_file}</td>
-        <td>${command.ask_day}</td>
+        <td>${command.return_file ? 'Да' : 'Нет'}</td>
+        <td>${command.ask_day ? 'Да' : 'Нет'}</td>
+        <td>${user.description}</td>
         <td>${command.active ? 'Да' : 'Нет'}</td>
         <td><button class="edit-user" data-guid="${command.guid}">Редактировать</button></td>
       `;
@@ -129,8 +131,9 @@ if (!localStorage.getItem('authToken')) {
     document.getElementById('name').value = command.name || '';
     document.getElementById('func').value = command.func || '';
     document.getElementById('arg').value = command.arg || '';
-    document.getElementById('return_file').value = command.return_file || '';
-    document.getElementById('ask_day').value = command.ask_day || '';
+    document.getElementById('return_file').value = command.return_file ? 'true' : 'false';
+    document.getElementById('ask_day').value = command.ask_day ? 'true' : 'false';
+    document.getElementById('description').value = user.description || '';
     document.getElementById('active').value = command.active ? 'true' : 'false';
     document.getElementById('updateModalButton').style.display = 'block';
     document.getElementById('CommandModalTitle').innerHTML = 'Редактировать'
@@ -143,6 +146,7 @@ if (!localStorage.getItem('authToken')) {
     document.getElementById('arg').value = '';
     document.getElementById('return_file').value = '';
     document.getElementById('ask_day').value = '';
+    document.getElementById('description').value = '';
     document.getElementById('active').value = ''; 
     document.getElementById('createModalButton').style.display = 'block';
     document.getElementById('CommandModalTitle').innerHTML = 'Добавить пользователя'
@@ -169,8 +173,9 @@ if (!localStorage.getItem('authToken')) {
     var name = document.getElementById('name').value;
     var func = document.getElementById('func').value;
     var arg = document.getElementById('arg').value;
-    var return_file = document.getElementById('return_file').value;
-    var ask_day = document.getElementById('ask_day').value;
+    var return_file = document.getElementById('return_file').value === 'true';
+    var ask_day = document.getElementById('ask_day').value === 'true';
+    var description = document.getElementById('description').value;
     var active = document.getElementById('active').value === 'true';
   
     // Создаем объект с данными   ВОПРОС
@@ -181,6 +186,7 @@ if (!localStorage.getItem('authToken')) {
       func: func,                 
       arg: arg,
       return_file: return_file,
+      description: description,
       ask_day: ask_day,
       active: active
     };
@@ -220,12 +226,13 @@ if (!localStorage.getItem('authToken')) {
     var name = document.getElementById('name').value;
     var func = document.getElementById('func').value;
     var arg = document.getElementById('arg').value;
-    var return_file = document.getElementById('return_file').value;
-    var ask_day = document.getElementById('ask_day').value;
+    var return_file = document.getElementById('return_file').value === 'true';
+    var ask_day = document.getElementById('ask_day').value === 'true';
+    var description = document.getElementById('description').value;
     var active = document.getElementById('active').value === 'true';
   
      // Проверяем, заполнены ли все поля
-     if (!category || !name || !func || !arg || !return_file || !ask_day) {
+     if (!category || !name || !func || !arg || !return_file || !description || !ask_day) {
       alert('Все поля должны быть заполнены.');
       return; // Прекращаем выполнение функции, если какое-либо поле не заполнено
     }
@@ -233,10 +240,11 @@ if (!localStorage.getItem('authToken')) {
     // Создаем объект с данными
     var data = {
         category: category,
-        name: parseInt(name),
+        name: name,
         func: func,
         arg: arg,
         return_file: return_file,
+        description: description,
         ask_day: ask_day,
         active: active
     };

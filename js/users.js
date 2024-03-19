@@ -52,7 +52,6 @@ if (!localStorage.getItem('authToken')) {
 }
 
 
-
 // Отправляем запрос к API
 fetch(`${config.ApiUrl}/user_get_all`, {
   method: 'GET',
