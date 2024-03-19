@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пользователи</title>
     <link rel="icon" href="../favicon.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ruda:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/users.css">
-    <link rel="stylesheet" href="../css/underline.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </head>
 <body>
 
@@ -24,41 +26,94 @@
 
                 <li id="UserGroups" class="menu__item"></li>
 
-             <!-- <div id="usersTableContainer">
-                <li id="UserGroups" class="menu__item"></li>
-              </div>-->
-
-                <li class="menu__item underline">
+                <!-- <li class="menu__item underline">
                   <a id="logoutButton" href="#">Выход</a>        
-                </li>
+                </li> -->
             </ul>
         </nav>
     </div>
 </header>
 
-<div class="menu">
-	<div class="title">
+<aside class="aside_slidebar sidebar">
+  <div class="logo">
+    <img src="../img/miac_short.png" alt="logo">
     <h2>НАВИГАЦИЯ</h2>
   </div>
-	<div class="list-menu">
-		<ul>
-			<li><a href="main.html">Главная</a></li>
-			<li><a href="users.html" id="showUsersLink">Пользователи</a></li>
-			<li><a href="commands.html">Команды</a></li>
-			<li><a href="directories.html">Директории</a></li>
-		</ul>
-	</div>
-	<div class="footer-menu">
-		<p>СПб ГБУЗ МИАЦ</p>
-	</div>
-</div>
+  <ul class="links">
+    <h4>Основные</h4>
+    <li>
+      <span class="material-symbols-outlined">dashboard</span>
+      <a href="main.html">Главная</a>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">person</span>
+      <a href="users.html">Пользователи</a>
+    </li>
+    <!-- <li>
+      <span class="material-symbols-outlined">flag</span>
+      <a href="#">Reports</a>
+    </li> -->
+    <hr>
+    <h4>Системные</h4>
+    <li>
+      <span class="material-symbols-outlined">ambient_screen</span>
+      <a href="files.html">Файлы</a>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">monitoring</span>
+      <a href="directories.html">Директории</a>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">flag</span>
+      <a href="commands.html">Команды</a>
+    </li>
+    <!-- <li>
+      <span class="material-symbols-outlined">pacemaker</span>
+      <a href="#">Theme Maker</a>
+    </li> -->
+    <hr>
+    <h4>Личное</h4>
+    <li>
+      <span class="material-symbols-outlined">mail</span>
+      <a href="https://mail.ru/?utm_source=portal&utm_medium=logo_portal_navigation&utm_campaign=mail.ru&mt_sub5=142510&mt_sub1=mail.ru&mt_click_id=mt-o4lsx4-1710880334-89398493">Почта</a>
+    </li>
+    <li class="logout-link">
+      <span class="material-symbols-outlined">logout</span>
+        <a id="logoutButton" href="#">Выход</a>        
+    </li>
+  </ul>
+</aside>
 
 <div class="content">
   <h1 class="welcome">Таблица пользователей</h1>
   <!-- <p class="welcome-descr">Сотрудники МИАЦ</p> -->
 
-<div class="users-table" id="usersTableContainer"></div>
+  <div class="users-table" id="usersTableContainer"></div>
 
+<img src="../img/excel.png" class="export_btn" alt="Export to Excel" onclick="exportTableToExcel()">
+
+<img src="../img/pdf.png" class="export_btn" alt="Export to PDF" onclick="exportTableToPDF()">
+
+<script>
+function exportTableToExcel() {
+  var table = document.querySelector('.users-table');
+  var worksheet = XLSX.utils.table_to_book(table);
+  XLSX.writeFile(worksheet, 'UsersTable.xlsx');
+}
+
+function exportTableToPDF() {
+    var data = document.getElementById('usersTableContainer');
+    html2canvas(data).then(canvas => {
+        var imgWidth = 208;
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var contentDataURL = canvas.toDataURL('image/png');
+        var pdf = new jsPDF('p', 'mm', 'a4');
+        var position = 0;
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.save('UsersTable.pdf');
+    });
+}
+</script>
 
   <!-- HTML для модального окна -->
   <div id="editUserModal" class="modal fade" role="dialog" style="display: none;">
@@ -68,7 +123,7 @@
           <h4 class="modal-title" id="UserModalTitle">Добавить пользователя</h4>
         </div>
         <div class="modal-body">
-          <form id="editUserForm">
+          <form id="editUserForm" autocomplete="off">
             <input type="hidden" id="guid" name="guid">
             <div class="form-group">
               <input type="number" id="tg_id" name="tg_id" placeholder="Telegram ID">

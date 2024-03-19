@@ -263,6 +263,6 @@ if (!localStorage.getItem('authToken')) {
       console.log('Успешно:', data);
       // Здесь можно обработать ответ от сервера, например, обновить интерфейс пользователя
       modal.style.display = "none"; 
-    //   location.reload();
+      location.reload();
     });
   });

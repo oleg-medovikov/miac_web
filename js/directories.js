@@ -81,7 +81,7 @@ if (!localStorage.getItem('authToken')) {
         <td>${dir.active ? 'Да' : 'Нет'}</td>
         <td><button class="edit-user" data-guid="${dir.guid}">Редактировать</button></td>
       `;
-      dir.appendChild(row);
+      dirTable.appendChild(row);
     });
     // Отображаем таблицу пользователей
     const dirTableContainer = document.getElementById('dirTableContainer');
@@ -101,9 +101,9 @@ if (!localStorage.getItem('authToken')) {
    })
   
   
-    .catch(error => {
-      console.error('Ошибка при загрузке пользователей:', error);
-    });
+    // .catch(error => {
+    //   console.error('Ошибка при загрузке пользователей:', error);
+    // });
     
   
     // Объявляем переменную modal в глобальной области видимости
@@ -230,6 +230,6 @@ if (!localStorage.getItem('authToken')) {
       console.log('Успешно:', data);
       // Здесь можно обработать ответ от сервера, например, обновить интерфейс пользователя
       modal.style.display = "none"; 
-    //   location.reload();
+      location.reload();
     });
   });
