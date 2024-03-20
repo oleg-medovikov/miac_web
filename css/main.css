@@ -14,11 +14,6 @@
 	padding: 20px;
 }
 
-.logo__img {
-    display: block;
-    height: 40px;
-}
-
 html {
     box-sizing: border-box;
 }
@@ -120,11 +115,11 @@ body {
 	font-size: 45px;
 }
 
-.welcome-descr{
+/* .welcome-descr{
 	text-align: center;
 	margin-top: 20px;
 	font-size: 20px;
-}
+} */
 
 .title h2{
 	font-size: 40px;

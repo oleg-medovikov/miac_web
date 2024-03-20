@@ -44,7 +44,7 @@ th{
 	padding-top: 20px;
 }
 
-.edit-user {
+.edit-dir {
 	color: rgb(8, 8, 8); 
 	border: none; 
 	padding: 5px 8px; 
@@ -58,7 +58,7 @@ th{
 	transition: background-color 0.3s ease;
 }
   
-.edit-user:hover {
+.edit-dir:hover {
 	background-color: #d3d4d5;
 }
 

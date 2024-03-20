@@ -88,7 +88,7 @@ if (!localStorage.getItem('authToken')) {
         <td>${command.ask_day ? 'Да' : 'Нет'}</td>
         <td>${command.description}</td>
         <td>${command.active ? 'Да' : 'Нет'}</td>
-        <td><button class="edit-user" data-guid="${command.guid}">Редактировать</button></td>
+        <td><button class="edit-command" data-guid="${command.guid}">Редактировать</button></td>
       `;
       commandTable.appendChild(row);
     });
@@ -133,7 +133,7 @@ if (!localStorage.getItem('authToken')) {
     document.getElementById('arg').value = command.arg || '';
     document.getElementById('return_file').value = command.return_file ? 'true' : 'false';
     document.getElementById('ask_day').value = command.ask_day ? 'true' : 'false';
-    document.getElementById('description').value = user.description || '';
+    document.getElementById('description').value = command.description || '';
     document.getElementById('active').value = command.active ? 'true' : 'false';
     document.getElementById('updateModalButton').style.display = 'block';
     document.getElementById('CommandModalTitle').innerHTML = 'Редактировать'

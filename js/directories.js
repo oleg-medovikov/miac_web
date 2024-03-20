@@ -80,7 +80,7 @@ if (!localStorage.getItem('authToken')) {
         <td>${dir.directory}</td>
         <td>${dir.description}</td>
         <td>${dir.active ? 'Да' : 'Нет'}</td>
-        <td><button class="edit-user" data-guid="${dir.guid}">Редактировать</button></td>
+        <td><button class="edit-dir" data-guid="${dir.guid}">Редактировать</button></td>
       `;
       dirTable.appendChild(row);
     });

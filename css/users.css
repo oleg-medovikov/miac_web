@@ -9,6 +9,10 @@
     font-family: "Poppins", sans-serif;
 }
 
+.wrapper_table_download{
+	margin-top: 30px;
+}
+
 .export_btn{
 	width: 25px;
 	height: 25px;
