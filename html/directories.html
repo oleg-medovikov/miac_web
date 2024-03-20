@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Директории</title>
-    <link rel="icon" href="../favicon.ico">
+    <link rel="icon" href="../img/miac_short.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/users.css">
     <link rel="stylesheet" href="../css/directories.css">
 </head>
 <body>
@@ -34,8 +32,7 @@
   
   <aside class="aside_slidebar sidebar">
     <div class="logo">
-      <img src="../img/miac_short.png" alt="logo">
-      <h2>НАВИГАЦИЯ</h2>
+      <!-- <h2>НАВИГАЦИЯ</h2> -->
     </div>
     <ul class="links">
       <h4>Основные</h4>
@@ -55,7 +52,7 @@
       <h4>Системные</h4>
       <li>
         <span class="material-symbols-outlined">ambient_screen</span>
-        <a href="files.html">Файлы</a>
+        <a href="file.html">Файлы</a>
       </li>
       <li>
         <span class="material-symbols-outlined">monitoring</span>
@@ -87,13 +84,12 @@
   
   <div class="users-table" id="dirTableContainer"></div>
   
-  
     <!-- HTML для модального окна -->
     <div id="editDirModal" class="modal fade" role="dialog" style="display: none;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="dirModalTitle">Добавить пользователя</h4>
+            <h4 class="modal-title" id="dirModalTitle">Добавить директорию</h4>
           </div>
           <div class="modal-body">
             <form id="editDirForm" autocomplete="off">

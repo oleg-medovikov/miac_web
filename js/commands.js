@@ -66,13 +66,13 @@ if (!localStorage.getItem('authToken')) {
     commandTable.innerHTML = `
       <tr>
         <th>Категория</th>
-        <th>Название команды</th>
+        <th>Название</th>
         <th>Функция</th>
         <th>Аргументы</th>
         <th>Возврат файлов</th>
         <th>Спросить день</th>
         <th>Описание</th>
-        <th>Активна</th>
+        <th>Активный</th>
         <th>Действие</th>
       </tr>
     `;
@@ -149,7 +149,7 @@ if (!localStorage.getItem('authToken')) {
     document.getElementById('description').value = '';
     document.getElementById('active').value = ''; 
     document.getElementById('createModalButton').style.display = 'block';
-    document.getElementById('CommandModalTitle').innerHTML = 'Добавить пользователя'
+    document.getElementById('CommandModalTitle').innerHTML = 'Добавить команду'
   }
     // Отображаем модальное окно
     modal.style.display = 'block';

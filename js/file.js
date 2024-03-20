@@ -53,7 +53,7 @@ if (!localStorage.getItem('authToken')) {
   
   
   // Отправляем запрос к API
-  fetch(`${config.ApiUrl}/dir_get_all`, {
+  fetch(`${config.ApiUrl}/file_get_all`, {
     method: 'GET',
     headers: {
       'Authorization': localStorage.getItem('authToken')
@@ -62,78 +62,78 @@ if (!localStorage.getItem('authToken')) {
     .then(response => response.json()) 
     .then(data => {
     // Создаем таблицу команд
-    const dirTable = document.createElement('table');
-    dirTable.innerHTML = `
+    const fileTable = document.createElement('table');
+    fileTable.innerHTML = `
       <tr>
-        <th>Имя</th>
-        <th>Директория</th>
-        <th>Описание</th>
-        <th>Активный</th>
+        <th>Дата создания</th>
+        <th>Команда</th>
+        <th>Имя файла</th>
         <th>Действие</th>
+        <th>Скачать</th>
       </tr>
     `;
     // Добавляем строки с данными пользователей
-    data.forEach(dir => {
+    data.forEach(file => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${dir.name}</td>
-        <td>${dir.directory}</td>
-        <td>${dir.description}</td>
-        <td>${dir.active ? 'Да' : 'Нет'}</td>
-        <td><button class="edit-user" data-guid="${dir.guid}">Редактировать</button></td>
+        <td>${file.date}</td>
+        <td>${file.command}</td>
+        <td>${file.name}</td>   
+        <td>${file.download}</td>
+        <td><button class="edit-user" data-guid="${file.guid}">Редактировать</button></td>
       `;
-      dirTable.appendChild(row);
+      fileTable.appendChild(row);
     });
     // Отображаем таблицу пользователей
-    const dirTableContainer = document.getElementById('dirTableContainer');
-    dirTableContainer.innerHTML = ''; // Очищаем предыдущее содержимое
-    dirTableContainer.appendChild(dirTable);
+    const fileTableContainer = document.getElementById('fileTableContainer');
+    fileTableContainer.innerHTML = ''; // Очищаем предыдущее содержимое
+    fileTableContainer.appendChild(fileTable);
     // Добавляем обработчик события для кнопок редактирования
-    const editButtons = document.querySelectorAll('.edit-dir');
+    const editButtons = document.querySelectorAll('.edit-file');
     editButtons.forEach(button => {
       button.addEventListener('click', function() {
         const guid = this.dataset.guid;
         // Находим полный объект пользователя по GUID
-        const dir = data.find(dir => dir.guid === guid);
+        const file = data.find(file => file.guid === guid);
         // Открываем модальное окно с данными пользователя
-        openEditDirModal(dir);
+        openEditFileModal(file);
       });   
     });
    })
   
   
-    // .catch(error => {
-    //   console.error('Ошибка при загрузке пользователей:', error);
-    // });
+    .catch(error => {
+      console.error('Ошибка при загрузке пользователей:', error);
+    });
     
   
     // Объявляем переменную modal в глобальной области видимости
   var modal;
   
   // Функция для открытия модального окна
-  function openEditDirModal(dir) {
+  function openEditFileModal(file) {
     // Получаем модальное окно
-    modal = document.getElementById('editDirModal');
+    modal = document.getElementById('editFileModal');
   
-  // Проверяем, существует ли dir
-  if (dir) {
+  // Проверяем, существует ли file
+  if (file) {
     // Заполняем поля формы данными пользователя
-    document.getElementById('guid').value = dir.guid || '';
-    document.getElementById('name').value = dir.name || '';
-    document.getElementById('directory').value = dir.directory || '';
-    document.getElementById('description').value = dir.description || '';
-    document.getElementById('active').value = dir.active ? 'true' : 'false';
+    document.getElementById('guid').value = file.guid || '';
+    document.getElementById('date').value = file.date || '';
+    document.getElementById('command').value = file.command || '';
+    document.getElementById('name').value = file.name || '';
+    document.getElementById('download').value = file.download || '';
     document.getElementById('updateModalButton').style.display = 'block';
-    document.getElementById('dirModalTitle').innerHTML = 'Редактировать'
+    document.getElementById('FileModalTitle').innerHTML = 'Редактировать'
   } else {
-    // Если dir не определен, очищаем поля формы
+    // Если file не определен, очищаем поля формы
     document.getElementById('guid').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('command').value = '';
     document.getElementById('name').value = '';
-    document.getElementById('directory').value = '';
-    document.getElementById('description').value = '';
-    document.getElementById('active').value = ''; 
+    document.getElementById('download').value = ''; 
     document.getElementById('createModalButton').style.display = 'block';
-    document.getElementById('dirModalTitle').innerHTML = 'Добавить директорию'
+    document.getElementById('FileModalTitle').innerHTML = 'Добавить файл'
   }
     // Отображаем модальное окно
     modal.style.display = 'block';
@@ -153,22 +153,22 @@ if (!localStorage.getItem('authToken')) {
   okBtn.addEventListener("click", function() {
    // Получаем данные из формы
     var guid = document.getElementById('guid').value;
+    var date = document.getElementById('date').value;
+    var command = document.getElementById('command').value;
     var name = document.getElementById('name').value;
-    var directory = document.getElementById('directory').value;
-    var description = document.getElementById('description').value;
-    var active = document.getElementById('active').value === 'true';
+    var download = document.getElementById('download').value;
   
     // Создаем объект с данными   ВОПРОС
     var data = {
-        guid: guid,
-        name: name,
-        directory: directory,
-        description: description,                 
-        active: active
+      guid: guid,
+      date: date,
+      command: command, 
+      name: name,                 
+      download: download,
     };
   
     // Отправляем запрос
-    fetch(`${config.ApiUrl}/dir_update`, {
+    fetch(`${config.ApiUrl}/file_update`, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',
@@ -187,10 +187,10 @@ if (!localStorage.getItem('authToken')) {
   
     
   // Получаем кнопку открытия для создания пользователя
-  var addBtn = document.getElementById("addDirModal");
+  var addBtn = document.getElementById("addFileModal");
     // Добавляем обработчик события на кнопку закрытия
-    addBtn.addEventListener("click", function() {
-    openEditDirModal();
+  addBtn.addEventListener("click", function() {
+    openEditFileModal();
   });
   
   
@@ -198,27 +198,27 @@ if (!localStorage.getItem('authToken')) {
   var okBtn = document.getElementById("createModalButton");
   okBtn.addEventListener("click", function() {
    // Получаем данные из формы
+    var date = document.getElementById('date').value;
+    var command = document.getElementById('command').value;
     var name = document.getElementById('name').value;
-    var directory = document.getElementById('directory').value;
-    var description = document.getElementById('description').value;
-    var active = document.getElementById('active').value === 'true';
+    var download = document.getElementById('download').value;
   
      // Проверяем, заполнены ли все поля
-     if (!name || !directory || !description) {
+     if (!date || !command || !name || !download) {
       alert('Все поля должны быть заполнены.');
       return; // Прекращаем выполнение функции, если какое-либо поле не заполнено
     }
   
     // Создаем объект с данными
     var data = {
+        date: date,
+        command: command,
         name: name,
-        directory: directory,
-        description: description,
-        active: active
+        download: download,
     };
   
     // Отправляем запрос
-    fetch(`${config.ApiUrl}/dir_create`, {
+    fetch(`${config.ApiUrl}/file_create`, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',

@@ -13,8 +13,10 @@
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
-	display: inline-block
+}
 
+.inline_block{
+	padding-left: 100px;
 }
 
 .users-table {
