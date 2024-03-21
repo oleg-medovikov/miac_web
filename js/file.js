@@ -80,7 +80,7 @@ if (!localStorage.getItem('authToken')) {
         <td>${file.command}</td>
         <td>${file.name}</td>   
         <td>${file.download}</td>
-        <td><button class="edit-user" data-guid="${file.guid}">Редактировать</button></td>
+        <td><button class="edit-file" data-guid="${file.guid}">Редактировать</button></td>
       `;
       fileTable.appendChild(row);
     });

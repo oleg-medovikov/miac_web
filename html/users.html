@@ -6,15 +6,13 @@
     <title>Пользователи</title>
     <link rel="icon" href="../img/miac_short.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/users.css">
+    <link rel="stylesheet" href="../css/same.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 </head>
 <body>
-
   <header id="header" class="header">
     <div class="container header__container">
         <a href="https://spbmiac.ru/" class="logo_top">
@@ -23,7 +21,6 @@
         <nav class="menu_top">
             <ul class="menu__list">
                 <li id="UserFIO" class="menu__item"></li>
-
                 <li id="UserGroups" class="menu__item"></li>
             </ul>
         </nav>
@@ -32,7 +29,6 @@
 
 <aside class="aside_slidebar sidebar">
   <div class="logo">
-    <!-- <h2>НАВИГАЦИЯ</h2> -->
   </div>
   <ul class="links">
     <h4>Основные</h4>
@@ -83,11 +79,11 @@
   <h1 class="welcome">Пользователи</h1>
 
   <div class="wrapper_table_download">
-    <div class="users-table" id="usersTableContainer"></div>
     <div class="inline_block">
       <img src="../img/excel.png" class="export_btn" alt="Export to Excel" onclick="exportTableToExcel()">
       <img src="../img/pdf.png" class="export_btn" alt="Export to PDF" onclick="exportTableToPDF()">
     </div>
+    <div class="users-table" id="usersTableContainer"></div>
   </div>
 
 <script>
@@ -111,7 +107,7 @@ function exportTableToPDF() {
 }
 </script>
 
-  <!-- HTML для модального окна -->
+  <!-- Модальное окно -->
   <div id="editUserModal" class="modal fade" role="dialog" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -121,6 +117,7 @@ function exportTableToPDF() {
         <div class="modal-body">
           <form id="editUserForm" autocomplete="off">
             <input type="hidden" id="guid" name="guid">
+
             <div class="form-group">
               <input type="number" id="tg_id" name="tg_id" placeholder="Telegram ID">
             </div>

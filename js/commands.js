@@ -182,7 +182,7 @@ if (!localStorage.getItem('authToken')) {
     var data = {
       guid: guid,
       category: category,
-      name: parseInt(name), 
+      name: name, 
       func: func,                 
       arg: arg,
       return_file: return_file,
