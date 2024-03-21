@@ -251,3 +251,27 @@ okBtn.addEventListener("click", function() {
     location.reload();
   });
 });
+
+// форма excel
+
+function exportTableToExcel() {
+  var table = document.querySelector('.users-table');
+  var worksheet = XLSX.utils.table_to_book(table);
+  XLSX.writeFile(worksheet, 'UsersTable.xlsx');
+}
+
+function exportTableToPDF() {
+    var data = document.getElementById('usersTableContainer');
+    html2canvas(data).then(canvas => {
+        var imgWidth = 208;
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var contentDataURL = canvas.toDataURL('image/png');
+        var pdf = new jsPDF('p', 'mm', 'a4');
+        var position = 0;
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.save('UsersTable.pdf');
+    });
+}
+
+// смена пароля
+

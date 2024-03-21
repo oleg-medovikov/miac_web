@@ -36,15 +36,7 @@ select {
     outline: none;
     transition: 0.3s;
     cursor: pointer;
-}
-
-.search{
-	margin-left: 78%;
-}
-
-.filter{
-    display: flex;
-    align-items: center;
+	width: 150px;
 }
 
 .filter label{

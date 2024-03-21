@@ -78,12 +78,11 @@
 
   <div class="container">
     <div class="filter">
-        <label class="search" for="search">Поиск:</label>
-        <input type="search" id="search" placeholder="Введите слово" onkeyup="searchTable()">
+        <input type="search" class="search" id="search" autocomplete="off" placeholder="Поиск" onkeyup="searchTable()">
     </div>
 
-    <div class="users-table" id="commandTableContainer">
   </div>
+  <div class="users-table" id="commandTableContainer">
 
   <script>
     function searchTable() {
