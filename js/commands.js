@@ -267,3 +267,12 @@ if (!localStorage.getItem('authToken')) {
     });
   });
   
+// экспорт в excel
+
+// const XLSX = require('xlsx');
+// function exportTableToExcel() {
+// var table = document.querySelector('.command-table');
+// var worksheet = XLSX.utils.table_to_book(table);
+// XLSX.writeFile(worksheet, 'CommandTable.xlsx');
+// }
+  

@@ -26,3 +26,23 @@ select {
 .edit-file:hover {
 	background-color: #d3d4d5;
 }
+
+.file-table {
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	transition: .5s;
+	margin-top: 7px;
+	
+}
+
+.file-table th,
+.file-table td {
+	border-top: 1px solid #8c8c8c;
+	padding: 8px;
+	text-align: center;
+}
+
+.file-table th {
+	background-color: #f5f0f0;
+}

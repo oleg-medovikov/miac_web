@@ -27,23 +27,22 @@ select {
 	background-color: #d3d4d5;
 }
 
-.filter input{
-    padding: 7px 7px;
-    border: 1px solid;
-    color: var(--dark8);
-    background: var(--dark4);
-    border-radius: 50px;
-    outline: none;
-    transition: 0.3s;
-    cursor: pointer;
-	width: 150px;
+.command-table {
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	transition: .5s;
+	margin-top: 7px;
 }
 
-.filter label{
-    color: var(--dark8);
-    margin-right: 9px;
+.command-table th,
+.command-table td {
+	border-top: 1px solid #8c8c8c;
+	padding: 8px;
+	text-align: center;
 }
 
-.filter input:focus{
-    border-color: var(--dark7);
+.command-table th {
+	background-color: #f5f0f0;
 }
+

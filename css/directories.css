@@ -26,3 +26,23 @@ select {
 .edit-dir:hover {
 	background-color: #d3d4d5;
 }
+
+.dir-table {
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	transition: .5s;
+	margin-top: 7px;
+	
+}
+
+.dir-table th,
+.dir-table td {
+	border-top: 1px solid #8c8c8c;
+	padding: 8px;
+	text-align: center;
+}
+
+.dir-table th {
+	background-color: #f5f0f0;
+}

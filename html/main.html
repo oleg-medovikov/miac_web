@@ -20,15 +20,96 @@
             <ul class="menu__list">
                 <li id="UserFIO" class="menu__item"></li>
                 <li id="UserGroups" class="menu__item"></li>
+                <li><a href="#" id="changePasswordLink">Сменить пароль</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
-<div class="content">
+<div id="changePasswordModal" class="modal-window" style="display: none;" >
+    <div class="modal-change">
+      <span class="close-button-change" onclick="closeModal()">&times;</span>
+      <h2>Смена пароля</h2>
+      <input type="password" id="oldPassword" placeholder="Старый пароль">
+      <input type="password" id="newPassword" placeholder="Новый пароль">
+      <input type="password" id="confirmPassword" placeholder="Подтверждение">
+      <button onclick="changePassword()">Сменить пароль</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      var modal = document.getElementById("changePasswordModal");
+      modal.style.display = "flex";
+  }
+    
+    // Функция для закрытия модального окна
+  function closeModal() {
+      var modal = document.getElementById("changePasswordModal");
+      modal.style.display = "none";
+  }
+    
+    // Функция для смены пароля
+  function changePassword() {
+      var oldPassword = document.getElementById("oldPassword").value;
+      var newPassword = document.getElementById("newPassword").value;
+      var confirmPassword = document.getElementById("confirmPassword").value;
+    
+      // Проверяем, что новый пароль и подтверждение нового пароля совпадают
+    
+  if (newPassword !== confirmPassword) {
+      alert("New password and confirmation do not match.");
+      return;
+  }
+    
+  const url = `${config.ApiUrl}/user_update_password`;
+  
+  const body = {
+        "old_password": "1245",
+        "new_password": "123"
+  };
+    
+  const headers = {
+        "Content-Type": "application/json",
+        "Authorization": token
+  };
+    
+  fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': localStorage.getItem('authToken')
+        },
+        body: JSON.stringify(data)
+  })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+    
+      // Вместо этого мы просто выведем сообщение в консоль
+        console.log("Old Password:", oldPassword);
+        console.log("New Password:", newPassword);
+    
+      // Очищаем поля ввода после успешной смены пароля
+        document.getElementById("oldPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+    
+        alert("Password changed successfully!");
+        closeModal(); // Закрываем модальное окно после успешной смены пароля
+  }
+    
+    // Привязываем функцию openModal к ссылке
+    document.getElementById("changePasswordLink").onclick = function(event) {
+      event.preventDefault(); // Предотвращаем переход по ссылке
+      openModal();
+  };
+  </script>
+
+
   <h1 class="welcome">Главная страница</h1>
   <!-- <p class="welcome-descr">Это главная страница вашего приложения.</p> -->
-</div>
+
 
 <aside class="aside_slidebar sidebar">
     <div class="logo">
@@ -80,6 +161,7 @@
   
 <script type="module" src="../js/main.js"></script>
 <script type="module" src="../js/logout.js"></script>
+
 
 
 </body>
