@@ -47,6 +47,11 @@ select {
 	background-color: #f5f0f0;
 }
 
+.interaction-elements{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
 
 

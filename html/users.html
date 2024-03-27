@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="../css/users.css">
     <link rel="stylesheet" href="../css/same.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <header id="header" class="header">
     <div class="container header__container">
-        <a href="https://spbmiac.ru/" class="logo_top">
+        <a href="https://spbmiac.ru/" target="_blank" class="logo_top">
             <img class="logo__img" src="../img/miac.png" alt="Логотип">
         </a>
         <nav class="menu_top">
@@ -51,54 +51,49 @@ function closeModal() {
     modal.style.display = "none";
 }
   
-  // Функция для смены пароля
 function changePassword() {
-    var oldPassword = document.getElementById("oldPassword").value;
-    var newPassword = document.getElementById("newPassword").value;
-    var confirmPassword = document.getElementById("confirmPassword").value;
-  
-    // Проверяем, что новый пароль и подтверждение нового пароля совпадают
-  
-if (newPassword !== confirmPassword) {
+  var oldPassword = document.getElementById("oldPassword").value;
+  var newPassword = document.getElementById("newPassword").value;
+  var confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (newPassword !== confirmPassword) {
     alert("New password and confirmation do not match.");
     return;
-}
-  
-const url = `${config.ApiUrl}/user_update_password`;
+  }
 
-const body = {
-      "old_password": "1245",
-      "new_password": "123"
-};
-  
-const headers = {
-      "Content-Type": "application/json",
-      "Authorization": token
-};
-  
-fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': localStorage.getItem('authToken')
-      },
-      body: JSON.stringify(data)
-})
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
-  
-    // Вместо этого мы просто выведем сообщение в консоль
-      console.log("Old Password:", oldPassword);
-      console.log("New Password:", newPassword);
-  
-    // Очищаем поля ввода после успешной смены пароля
-      document.getElementById("oldPassword").value = "";
-      document.getElementById("newPassword").value = "";
-      document.getElementById("confirmPassword").value = "";
-  
-      alert("Password changed successfully!");
-      closeModal(); // Закрываем модальное окно после успешной смены пароля
+  const url = `${config.ApiUrl}/user_update_password`;
+
+  const body = {
+    "old_password": "1245",
+    "new_password": "123"
+  };
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": token
+  };
+
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization': localStorage.getItem('authToken')
+    },
+    body: JSON.stringify(body)
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
+  console.log("Old Password:", oldPassword);
+  console.log("New Password:", newPassword);
+
+  document.getElementById("oldPassword").value = "";
+  document.getElementById("newPassword").value = "";
+  document.getElementById("confirmPassword").value = "";
+
+  alert("Password changed successfully!");
+  closeModal(); // Закрываем модальное окно после успешной смены пароля
 }
   
   // Привязываем функцию openModal к ссылке
@@ -112,7 +107,7 @@ fetch(url, {
   <div class="logo">
   </div>
   <ul class="links">
-    <h4>Основные</h4>
+    <!-- <h4>Основные</h4> -->
     <li>
       <span class="material-symbols-outlined">dashboard</span>
       <a href="main.html">Главная</a>
@@ -126,7 +121,7 @@ fetch(url, {
       <a href="#">Reports</a>
     </li> -->
     <hr>
-    <h4>Системные</h4>
+    <!-- <h4>Системные</h4> -->
     <li>
       <span class="material-symbols-outlined">ambient_screen</span>
       <a href="file.html">Файлы</a>
@@ -144,7 +139,7 @@ fetch(url, {
       <a href="#">Theme Maker</a>
     </li> -->
     <hr>
-    <h4>Личное</h4>
+    <!-- <h4>Личное</h4> -->
     <li>
       <span class="material-symbols-outlined">mail</span>
       <a href="https://mail.ru/?utm_source=portal&utm_medium=logo_portal_navigation&utm_campaign=mail.ru&mt_sub5=142510&mt_sub1=mail.ru&mt_click_id=mt-o4lsx4-1710880334-89398493">Почта</a>
@@ -202,7 +197,7 @@ fetch(url, {
       <div class="modal-footer">
         <button type="button" class="close-button" id="closeModalButton"></button>
         <button type="button" class="minimalist-button" id="updateModalButton" style="display: none;">Обновить</button> 
-        <button type="button" class="minimalist-button" id="createModalButton">Создать</button>
+        <button type="button" class="minimalist-button" id="createModalButton" style="display: none;">Создать</button>
       </div>
     </div>
   </div>
@@ -210,20 +205,65 @@ fetch(url, {
 </div>
 
 
-  <div class="interaction-elements">
-    <div class="wrapper_table_download">
-      <img src="../img/excel.png" class="export_btn" alt="Export to Excel" onclick="exportTableToExcel()">
-      <img src="../img/pdf.png" class="export_btn" alt="Export to PDF" onclick="exportTableToPDF()">
-    </div>
-    
-    <div class="filter">
-        <input type="search" class="search" id="search" autocomplete="off" placeholder="Поиск" onkeyup="searchTable()">
-    </div>
+<div class="interaction-elements">
+  <div class="wrapper_table_download">
+    <img src="../img/excel.png" class="export_btn" alt="Export to Excel" onclick="exportTableToExcel()">
+    <img src="../img/pdf.png" class="export_btn" alt="Export to PDF" onclick="exportTableToPDF()">
   </div>
   
-  <div class="wrapper">
-    <div class="users-table" id="usersTableContainer"></div>
+  <div class="filter">
+      <input type="search" class="search" id="search" autocomplete="off" placeholder="Поиск" onkeyup="searchTable()">
   </div>
+</div>
+
+<div class="wrapper">
+  <div class="users-table" id="usersTableContainer"></div>
+</div>
+
+<script>
+function exportTableToExcel() {
+  // Получаем элемент таблицы
+  var table = document.getElementById('usersTableContainer');
+
+  // Получаем данные из таблицы
+  var data = [];
+  var rows = table.getElementsByTagName('tr');
+  for (var i = 0; i < rows.length; i++) {
+    var row = [];
+    var cells = rows[i].getElementsByTagName('td');
+    for (var j = 0; j < cells.length; j++) {
+      row.push(cells[j].innerText);
+    }
+    data.push(row);
+  }
+
+  // Создаем объект workbook
+  var workbook = XLSX.utils.book_new();
+
+  // Создаем объект worksheet
+  var worksheet = XLSX.utils.json_to_sheet(data);
+
+  // Добавляем worksheet в workbook
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+  // Записываем workbook в ArrayBuffer
+  var out = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+  // Создаем blob из ArrayBuffer
+  var blob = new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+  // Создаем ссылку для скачивания
+  var link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = 'users.xlsx';
+  link.click();
+
+  // Удаляем объект URL после использования
+  setTimeout(function() {
+    window.URL.revokeObjectURL(link.href);
+  }, 100);
+}
+</script>
   
   <script>
     function searchTable() {
@@ -257,7 +297,6 @@ fetch(url, {
 
 <script type="module" src="../js/logout.js"></script>
 <script type="module" src="../js/users.js"></script>
-<script type="module" src="../js/exportTableToExcel.js"></script>
 
 </body>
 </html>
