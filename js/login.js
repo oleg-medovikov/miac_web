@@ -24,7 +24,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   })
   .then(data => {
     localStorage.setItem('authToken', data.token);
-    window.location.href = '../html/main.html';
+    window.location.href = '../html/users.html';
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);

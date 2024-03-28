@@ -67,7 +67,7 @@ fetch(`${config.ApiUrl}/user_get_all`, {
     <tr>
       <th>ID в Telegram</th>
       <th>Имя пользователя</th>
-      <th>ФИО</th>
+      <th>Фамилия</th>
       <th>Группы</th>
       <th>Описание</th>
       <th>Активный</th>
