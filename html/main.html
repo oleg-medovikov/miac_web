@@ -20,10 +20,91 @@
             <ul class="menu__list">
                 <li id="UserFIO" class="menu__item"></li>
                 <li id="UserGroups" class="menu__item"></li>
+                <li><a href="#" id="changePasswordLink">Сменить пароль</a></li>
             </ul>
         </nav>
     </div>
 </header>
+
+<div id="changePasswordModal" class="modal-window" style="display: none;" >
+    <div class="modal-change">
+      <span class="close-button-change" onclick="closeModal()">&times;</span>
+      <h2>Смена пароля</h2>
+      <input type="password" id="oldPassword" placeholder="Старый пароль">
+      <input type="password" id="newPassword" placeholder="Новый пароль">
+      <input type="password" id="confirmPassword" placeholder="Подтверждение">
+      <button onclick="changePassword()">Сменить пароль</button>
+    </div>
+  </div>
+  
+  <script>
+    function openModal() {
+      var modal = document.getElementById("changePasswordModal");
+      modal.style.display = "flex";
+  }
+    
+    // Функция для закрытия модального окна
+  function closeModal() {
+      var modal = document.getElementById("changePasswordModal");
+      modal.style.display = "none";
+  }
+    
+    // Функция для смены пароля
+  function changePassword() {
+      var oldPassword = document.getElementById("oldPassword").value;
+      var newPassword = document.getElementById("newPassword").value;
+      var confirmPassword = document.getElementById("confirmPassword").value;
+    
+      // Проверяем, что новый пароль и подтверждение нового пароля совпадают
+    
+  if (newPassword !== confirmPassword) {
+      alert("New password and confirmation do not match.");
+      return;
+  }
+    
+  const url = `${config.ApiUrl}/user_update_password`;
+  
+  const body = {
+        "old_password": "1245",
+        "new_password": "123"
+  };
+    
+  const headers = {
+        "Content-Type": "application/json",
+        "Authorization": token
+  };
+    
+  fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': localStorage.getItem('authToken')
+        },
+        body: JSON.stringify(data)
+  })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+    
+      // Вместо этого мы просто выведем сообщение в консоль
+        console.log("Old Password:", oldPassword);
+        console.log("New Password:", newPassword);
+    
+      // Очищаем поля ввода после успешной смены пароля
+        document.getElementById("oldPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+    
+        alert("Password changed successfully!");
+        closeModal(); // Закрываем модальное окно после успешной смены пароля
+  }
+    
+    // Привязываем функцию openModal к ссылке
+    document.getElementById("changePasswordLink").onclick = function(event) {
+      event.preventDefault(); // Предотвращаем переход по ссылке
+      openModal();
+  };
+  </script>
 
   <h1 class="welcome">Доступ к командам</h1>
   <!-- <p class="welcome-descr">Это главная страница вашего приложения.</p> -->
@@ -78,7 +159,7 @@
   </aside>
 
 
-  <div class="container-card">
+<div class="container-card">
     <input type="radio" name="grid" id="grid-2" value="2">
     <input type="radio" name="grid" id="grid-3" value="3">
     <input type="radio" name="grid" id="grid-4" value="4" checked>
@@ -92,10 +173,15 @@
         <div class="item">
             <div class="content-wrapper">
                 <div class="title">Максим Матвеев</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
+                <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
 
                 <button class="addCard">Добавить</button>
             </div>
@@ -104,10 +190,15 @@
         <div class="item">
             <div class="content-wrapper">
                 <div class="title">Никита Алексеев</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
+                <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
 
                 <button class="addCard">Добавить</button>
             </div>
@@ -116,10 +207,15 @@
         <div class="item">
             <div class="content-wrapper">
                 <div class="title">Игорь Кузнецов</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
+                <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
 
                 <button class="addCard">Добавить</button>
             </div>
@@ -128,34 +224,15 @@
         <div class="item">
             <div class="content-wrapper">
                 <div class="title">Данила Миронов</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-
-                <button class="addCard">Добавить</button>
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="content-wrapper">
-                <div class="title">Артём Ващенко</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-
-                <button class="addCard">Добавить</button>
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="content-wrapper">
-                <div class="title">Арсений Краснов</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
-                <div class="category">- Текст</div>
+                <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
+                  <div class="category">- Текст
+                    <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
+                  </div>
 
                 <button class="addCard">Добавить</button>
             </div>
@@ -163,8 +240,74 @@
 
     </div>
 </div>
+
+<div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Новая команда</h2>
+        <input type="text" id="inputText" placeholder="Категория">
+        <button class="modal-content-add" id="okButton">Добавить</button>
+        <button type="button" class="close-button" id="closeModalButton"></button>
+    </div>
+</div>
+
+<!-- <script>
+document.querySelector('.addCard').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'block';
+});
+
+document.getElementById('okButton').addEventListener('click', function() {
+    var inputText = document.getElementById('inputText').value;
+    var newCategory = document.createElement('div');
+    newCategory.className = 'category';
+    newCategory.textContent = '- ' + inputText;
+    document.querySelector('.content-wrapper').appendChild(newCategory);
+    document.getElementById('modal').style.display = 'none';
+    document.getElementById('inputText').value = ''; // Очистка поля ввода после добавления
+});
+</script> -->
+
+<script>
+    document.getElementById('closeModalButton').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+    });
+
+  // Получаем все элементы с классом category
+  var categories = document.getElementsByClassName('category');
+
+  // Добавляем обработчик события наведения мыши на каждый элемент
+  for (var i = 0; i < categories.length; i++) {
+    categories[i].addEventListener('mouseover', function(event) {
+      // Показываем кнопку удаления
+      event.currentTarget.querySelector('.delete-button').style.display = 'inline-block';
+    });
+
+    // Добавляем обработчик события ухода мыши с элемента
+    categories[i].addEventListener('mouseout', function(event) {
+      // Скрываем кнопку удаления
+      event.currentTarget.querySelector('.delete-button').style.display = 'none';
+    });
+
+    // Добавляем обработчик события нажатия на кнопку удаления
+    categories[i].querySelector('.delete-button').addEventListener('click', function(event) {
+      // Отправляем AJAX-запрос на сервер для удаления категории
+      var xhr = new XMLHttpRequest();
+      xhr.open('DELETE', '/delete-category', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Удаляем категорию из DOM
+          event.currentTarget.parentNode.remove();
+        }
+      };
+      // В запросе должен быть идентификатор категории, который нужно удалить
+      xhr.send(JSON.stringify({ id: 'категории_id' }));
+    });
+  }
+</script>
   
 <script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/logout.js"></script>
+
 
 </body>
 </html>
