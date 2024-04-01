@@ -51,6 +51,23 @@ if (!localStorage.getItem('authToken')) {
   });
 }
 
+let url = 'http://localhost:8080/access_get_all';
+
+let headers = {
+  "Content-Type": "application/json",
+  "Authorization": token
+};
+
+fetch(url, {
+  method: 'GET',
+  headers: headers
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch((error) => {
+  console.error('Ошибка:', error);
+});
+
 
 
 // fetch(`${config.ApiUrl}/dir_get_all`, {
