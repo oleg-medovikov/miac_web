@@ -116,7 +116,7 @@ if (!localStorage.getItem('authToken')) {
     
   
     // Объявляем переменную modal в глобальной области видимости
-  var modal;
+  let modal;
   
   // Функция для открытия модального окна
   function openEditCommandModal(command) {
@@ -157,7 +157,7 @@ if (!localStorage.getItem('authToken')) {
   
   
   // Получаем кнопку закрытия модального окна
-  var closeBtn = document.getElementById("closeModalButton");
+  let closeBtn = document.getElementById("closeModalButton");
     // Добавляем обработчик события на кнопку закрытия
   closeBtn.addEventListener("click", function() {
     // Скрываем модальное окно
@@ -165,21 +165,21 @@ if (!localStorage.getItem('authToken')) {
   });
   
   
-  var okBtn = document.getElementById("updateModalButton");
+  okBtn = document.getElementById("updateModalButton");
   okBtn.addEventListener("click", function() {
    // Получаем данные из формы
-    var guid = document.getElementById('guid').value;
-    var category = document.getElementById('category').value;
-    var name = document.getElementById('name').value;
-    var func = document.getElementById('func').value;
-    var arg = document.getElementById('arg').value;
-    var return_file = document.getElementById('return_file').value === 'true';
-    var ask_day = document.getElementById('ask_day').value === 'true';
-    var description = document.getElementById('description').value;
-    var active = document.getElementById('active').value === 'true';
+    let guid = document.getElementById('guid').value;
+    let category = document.getElementById('category').value;
+    let name = document.getElementById('name').value;
+    let func = document.getElementById('func').value;
+    let arg = document.getElementById('arg').value;
+    let return_file = document.getElementById('return_file').value === 'true';
+    let ask_day = document.getElementById('ask_day').value === 'true';
+    let description = document.getElementById('description').value;
+    let active = document.getElementById('active').value === 'true';
   
     // Создаем объект с данными   ВОПРОС
-    var data = {
+    let data = {
       guid: guid,
       category: category,
       name: name, 
@@ -211,7 +211,7 @@ if (!localStorage.getItem('authToken')) {
   
     
   // Получаем кнопку открытия для создания пользователя
-  var addBtn = document.getElementById("addCommandModal");
+  let addBtn = document.getElementById("addCommandModal");
     // Добавляем обработчик события на кнопку закрытия
   addBtn.addEventListener("click", function() {
     openEditCommandModal();
@@ -219,17 +219,17 @@ if (!localStorage.getItem('authToken')) {
   
   
   //Создание нового пользователя
-  var okBtn = document.getElementById("createModalButton");
+  let okBtn = document.getElementById("createModalButton");
   okBtn.addEventListener("click", function() {
    // Получаем данные из формы
-    var category = document.getElementById('category').value;
-    var name = document.getElementById('name').value;
-    var func = document.getElementById('func').value;
-    var arg = document.getElementById('arg').value;
-    var return_file = document.getElementById('return_file').value === 'true';
-    var ask_day = document.getElementById('ask_day').value === 'true';
-    var description = document.getElementById('description').value;
-    var active = document.getElementById('active').value === 'true';
+    let category = document.getElementById('category').value;
+    let name = document.getElementById('name').value;
+    let func = document.getElementById('func').value;
+    let arg = document.getElementById('arg').value;
+    let return_file = document.getElementById('return_file').value === 'true';
+    let ask_day = document.getElementById('ask_day').value === 'true';
+    let description = document.getElementById('description').value;
+    let active = document.getElementById('active').value === 'true';
   
      // Проверяем, заполнены ли все поля
      if (!category || !name || !func || !arg || !return_file || !description || !ask_day) {
@@ -238,7 +238,7 @@ if (!localStorage.getItem('authToken')) {
     }
   
     // Создаем объект с данными
-    var data = {
+    let data = {
         category: category,
         name: name,
         func: func,
@@ -271,8 +271,8 @@ if (!localStorage.getItem('authToken')) {
 
 // const XLSX = require('xlsx');
 // function exportTableToExcel() {
-// var table = document.querySelector('.command-table');
-// var worksheet = XLSX.utils.table_to_book(table);
+// let table = document.querySelector('.command-table');
+// let worksheet = XLSX.utils.table_to_book(table);
 // XLSX.writeFile(worksheet, 'CommandTable.xlsx');
 // }
   

@@ -6,7 +6,7 @@
     <title>Пользователи</title>
     <link rel="icon" href="../img/miac_short.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <link rel="stylesheet" href="../css/users.css">
+    <link rel="stylesheet" href="../css/data.css">
     <link rel="stylesheet" href="../css/same.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -158,13 +158,13 @@ fetch(url, {
 </aside>
 
 
-<h1 class="welcome">Пользователи</h1>
+<h1 class="welcome">Доступ</h1>
 
-<div id="editUserModal" class="modal fade" role="dialog" style="display: none;">
+<!-- <div id="editDataModal" class="modal fade" role="dialog" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="UserModalTitle">Добавить пользователя</h4>
+        <h4 class="modal-title" id="DataModalTitle">Добавить пользователя</h4>
       </div>
       <div class="modal-body">
         <form id="editUserForm" autocomplete="off">
@@ -208,7 +208,7 @@ fetch(url, {
     </div>
   </div>
 </div>
-</div>
+</div> -->
 
 
 <div class="interaction-elements">
@@ -223,13 +223,13 @@ fetch(url, {
 </div>
 
 <div class="wrapper">
-  <div class="users-table" id="usersTableContainer"></div>
+  <div class="data-table" id="dataTableContainer"></div>
 </div>
 
 <script>
 function exportTableToExcel() {
   // Получаем элемент таблицы
-  var table = document.getElementById('usersTableContainer');
+  var table = document.getElementById('dataTableContainer');
 
   // Получаем данные из таблицы
   var data = [];
@@ -261,7 +261,7 @@ function exportTableToExcel() {
   // Создаем ссылку для скачивания
   var link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
-  link.download = 'users.xlsx';
+  link.download = 'data.xlsx';
   link.click();
 
   // Удаляем объект URL после использования
@@ -272,36 +272,35 @@ function exportTableToExcel() {
 </script>
   
   <script>
-    function searchTable() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("search");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("usersTableContainer");
-        tr = table.getElementsByTagName("tr");
-    
-        for (i = 0; i < tr.length; i++) {
-            tr[i].style.display = ""; // По умолчанию показываем все строки
-            td = tr[i].getElementsByTagName("td");
-            for (var j = 0; j < td.length; j++) {
-                txtValue = td[j].textContent || td[j].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                    break; // Выходим из цикла, если нашли совпадение
-                } else {
-                    tr[i].style.display = "none";
-                }
+function searchTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("dataTableContainer");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = ""; // По умолчанию показываем все строки
+        td = tr[i].getElementsByTagName("td")[0]; // Получаем только первую ячейку
+        if (td) { // Проверяем, что td существует
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
             }
         }
     }
+}
   </script>
 
 
-<div id="addUserModal" class="add-user-btn">
+<div id="addDataModal" class="add-user-btn">
   <a href="#"><img class="add-link" src="../img/icon_add.png" alt="add"></a>
 </div>
 
 
-<script type="module" src="../js/users.js"></script>
+<script type="module" src="../js/data.js"></script>
 <script type="module" src="../js/logout.js"></script>
 
 

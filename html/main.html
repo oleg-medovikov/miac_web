@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/same.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 
@@ -123,10 +125,10 @@
         <span class="material-symbols-outlined">person</span>
         <a href="users.html">Пользователи</a>
       </li>
-      <!-- <li>
-        <span class="material-symbols-outlined">flag</span>
-        <a href="#">Reports</a>
-      </li> -->
+      <li>
+        <span class="material-symbols-outlined">pacemaker</span>
+        <a href="data.html">Доступ</a>
+      </li>
       <hr>
       <!-- <h4>Системные</h4> -->
       <li>
@@ -223,14 +225,14 @@
 
         <div class="item">
             <div class="content-wrapper">
-                <div class="title">Данила Миронов</div>
-                <div class="category">- Текст
+                <div class="title" id="title">Данила Миронов</div>
+                <div class="category" id="category">- Текст1
                     <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
                   </div>
-                  <div class="category">- Текст
+                  <div class="category" id="category">- Текст2
                     <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
                   </div>
-                  <div class="category">- Текст
+                  <div class="category" id="category">- Текст3
                     <button class="delete-button"><img class="trash_bin" src="../img/trash_bin_icon.png" alt="trash_bin"></button>
                   </div>
 
@@ -241,6 +243,84 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('.delete-button').on('click', function() {
+            // Удаляем родительский элемент .category, который является предшественником кнопки
+            $(this).parent().remove();
+        });
+    });
+
+
+// Функция для создания карточки
+function createCard(user, categories) {
+    const card = document.createElement('div');
+    card.className = 'item';
+
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'content-wrapper';
+
+    const title = document.createElement('div');
+    title.className = 'title';
+    title.textContent = user;
+
+    const addButton = document.createElement('button');
+    addButton.className = 'addCard';
+    addButton.textContent = 'Добавить';
+
+    contentWrapper.appendChild(title);
+
+    categories.forEach(category => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        categoryDiv.textContent = `- ${category}`;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+
+        const trashBinIcon = document.createElement('img');
+        trashBinIcon.className = 'trash_bin';
+        trashBinIcon.src = '../img/trash_bin_icon.png';
+        trashBinIcon.alt = 'trash_bin';
+
+        deleteButton.appendChild(trashBinIcon);
+        categoryDiv.appendChild(deleteButton);
+        contentWrapper.appendChild(categoryDiv);
+    });
+
+    contentWrapper.appendChild(addButton);
+    card.appendChild(contentWrapper);
+
+    return card;
+}
+
+// Функция для получения данных с сервера и создания карточек
+    async function fetchAndCreateCards() {
+        fetch(`${config.ApiUrl}/access_get_all`, {
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem('authToken')
+        }
+    })
+
+    try {
+        const response = await fetch(url, { headers });
+        const data = await response.json();
+
+        // Предполагается, что data содержит массив объектов, каждый из которых имеет свойства user и categories
+        data.forEach(item => {
+            const card = createCard(item.user, item.categories);
+            document.body.appendChild(card); // Добавляем карточку на страницу
+        });
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
+}
+
+// Вызываем функцию для создания карточек
+fetchAndCreateCards();
+    </script>
+
 <div id="modal" class="modal" style="display: none;">
     <div class="modal-content">
         <h2>Новая команда</h2>
@@ -250,7 +330,7 @@
     </div>
 </div>
 
-<!-- <script>
+<script>
 document.querySelector('.addCard').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'block';
 });
@@ -264,7 +344,7 @@ document.getElementById('okButton').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
     document.getElementById('inputText').value = ''; // Очистка поля ввода после добавления
 });
-</script> -->
+</script>
 
 <script>
     document.getElementById('closeModalButton').addEventListener('click', function() {

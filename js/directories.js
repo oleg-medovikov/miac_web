@@ -234,12 +234,3 @@ if (!localStorage.getItem('authToken')) {
       location.reload();
     });
   });
-
-  // экспорт в excel
-
-  // const XLSX = require('xlsx');
-  // function exportTableToExcel() {
-  // var table = document.querySelector('.dir-table');
-  // var worksheet = XLSX.utils.table_to_book(table);
-  // XLSX.writeFile(worksheet, 'DirectoriesTable.xlsx');
-  // }
