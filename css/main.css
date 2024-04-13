@@ -181,10 +181,10 @@ input[name="grid"][value="1"]:checked ~ .list .item .img{
 }
 
 .trash_bin{
-	height: 11px;
-	width: 11px;
+	height: 13px;
+	width: 12px;
 	text-align: center;
-	padding-top: 1px;
+	margin-top: 3px;
 }
 
 .modal {

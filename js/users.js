@@ -64,7 +64,7 @@ fetch(`${config.ApiUrl}/user_get_all`, {
   // Создаем таблицу пользователей
   const usersTable = document.createElement('table');
   usersTable.innerHTML = `
-    <tr>
+    <tr> 
       <th>ID в Telegram</th>
       <th>Имя пользователя</th>
       <th>Фамилия</th>

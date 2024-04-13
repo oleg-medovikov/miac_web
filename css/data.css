@@ -12,11 +12,13 @@ select {
 .edit-data {
 	color: rgb(8, 8, 8); 
 	border: none; 
-	padding: 5px 8px; 
+	padding: 3px 7px; 
 	text-align: center; 
 	text-decoration: none; 
 	display: inline-block; 
-	font-size: 16px; 
+	font-size: 13px; 
+    width: 38px;
+    height: 33px;
 	margin: 4px 2px; 
 	cursor: pointer; 
 	border-radius: 5px; 
