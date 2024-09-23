@@ -1,11 +1,8 @@
 import config from '../config.js';
   
-// Проверяем наличие токена в localStorage
 if (!localStorage.getItem('authToken')) {
-  // Если токена нет, перенаправляем на страницу входа
   window.location.href = '../html/login.html';
 } else {
-  // Отправляем запрос к API для проверки токена
   fetch(`${config.ApiUrl}/check_token`, {
     method: 'GET',
     headers: {
@@ -20,9 +17,9 @@ if (!localStorage.getItem('authToken')) {
   })
   .then(data => {
     if (!data.token_valid) {
-      // Если токен не валиден, перенаправляем на страницу входа
+
       window.location.href = '../html/login.html';
-    } else { // Если токен валидный - мы вытаскиваем пользователя
+    } else { 
       fetch(`${config.ApiUrl}/user_get`, { 
         method: 'GET',
         headers: {
@@ -33,7 +30,7 @@ if (!localStorage.getItem('authToken')) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json(); // Преобразуем тело ответа в JSON
+        return response.json(); 
       })
       .then(data => {  
         localStorage.setItem('fio', data.fio); 
@@ -51,7 +48,6 @@ if (!localStorage.getItem('authToken')) {
   });
 }
   
-  // Отправляем запрос к API
   fetch(`${config.ApiUrl}/file_get_all`, {
     method: 'GET',
     headers: {
@@ -60,7 +56,6 @@ if (!localStorage.getItem('authToken')) {
   })
     .then(response => response.json()) 
     .then(data => {
-    // Создаем таблицу команд
     const fileTable = document.createElement('table');
     fileTable.innerHTML = `
       <tr>
@@ -69,7 +64,6 @@ if (!localStorage.getItem('authToken')) {
         <th>Действие</th>
       </tr>
     `;
-    // Добавляем строки с данными пользователей
     data.forEach(file => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -79,9 +73,8 @@ if (!localStorage.getItem('authToken')) {
       `;
       fileTable.appendChild(row);
     });
-    // Отображаем таблицу пользователей
     const fileTableContainer = document.getElementById('fileTableContainer');
-    fileTableContainer.innerHTML = ''; // Очищаем предыдущее содержимое
+    fileTableContainer.innerHTML = ''; 
     fileTableContainer.appendChild(fileTable);
       });   
 

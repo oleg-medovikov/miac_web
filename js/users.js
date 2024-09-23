@@ -52,7 +52,6 @@ if (!localStorage.getItem('authToken')) {
 }
 
 
-// Отправляем запрос к API
 fetch(`${config.ApiUrl}/user_get_all`, {
   method: 'GET',
   headers: {
@@ -120,7 +119,6 @@ function openEditUserModal(user) {
   // Получаем модальное окно
   modal = document.getElementById('editUserModal');
 
-// Проверяем, существует ли user
 if (user) {
   // Заполняем поля формы данными пользователя
   document.getElementById('guid').value = user.guid || '';
@@ -251,8 +249,4 @@ okBtn.addEventListener("click", function() {
     location.reload();
   });
 });
-
-// экспорт в excel
-
-
 

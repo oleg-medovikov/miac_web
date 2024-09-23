@@ -1,236 +1,261 @@
 import config from '../config.js';
-  
-// Проверяем наличие токена в localStorage
-if (!localStorage.getItem('authToken')) {
-  // Если токена нет, перенаправляем на страницу входа
-  window.location.href = '../html/login.html';
-} else {
-  // Отправляем запрос к API для проверки токена
-  fetch(`${config.ApiUrl}/check_token`, {
-    method: 'GET',
+
+function checkAuthToken() {
+  if (!localStorage.getItem('authToken')) {
+    window.location.href = '../html/login.html';
+    return false;
+  }
+  return true;
+}
+
+function fetchWithToken(url, options = {}) {
+  return fetch(url, {
+    ...options,
     headers: {
+      ...options.headers,
       'Authorization': localStorage.getItem('authToken')
     }
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    if (!data.token_valid) {
-      // Если токен не валиден, перенаправляем на страницу входа
-      window.location.href = '../html/login.html';
-    } else { // Если токен валидный - мы вытаскиваем пользователя
-      fetch(`${config.ApiUrl}/user_get`, { 
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('authToken')
-        }
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Преобразуем тело ответа в JSON
-      })
-      .then(data => {  
-        localStorage.setItem('fio', data.fio); 
-        localStorage.setItem('groups', data.groups);
-        document.getElementById('UserFIO').innerHTML = localStorage.getItem('fio');
-        document.getElementById('UserGroups').innerHTML = localStorage.getItem('groups');
-      })
-      .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-      });
-    }
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
   });
 }
-  
-  
-  // Отправляем запрос к API
-  fetch(`${config.ApiUrl}/dir_get_all`, {
-    method: 'GET',
-    headers: {
-      'Authorization': localStorage.getItem('authToken')
-    }
-  })
-    .then(response => response.json()) 
-    .then(data => {
-    // Создаем таблицу команд
-    const dirTable = document.createElement('table');
-    dirTable.innerHTML = `
-      <tr>
-        <th>Имя</th>
-        <th>Директория</th>
-        <th>Описание</th>
-        <th>Активный</th>
-        <th>Действие</th>
-      </tr>
-    `;
-    // Добавляем строки с данными пользователей
-    data.forEach(dir => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${dir.name}</td>
-        <td>${dir.directory}</td>
-        <td>${dir.description}</td>
-        <td>${dir.active ? 'Да' : 'Нет'}</td>
-        <td><button class="edit-dir" data-guid="${dir.guid}">Редактировать</button></td>
-      `;
-      dirTable.appendChild(row);
-    });
-    // Отображаем таблицу пользователей
-    const dirTableContainer = document.getElementById('dirTableContainer');
-    dirTableContainer.innerHTML = ''; // Очищаем предыдущее содержимое
-    dirTableContainer.appendChild(dirTable);
-    // Добавляем обработчик события для кнопок редактирования
-    const editButtons = document.querySelectorAll('.edit-dir');
-    editButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const guid = this.dataset.guid;
-        // Находим полный объект пользователя по GUID
-        const dir = data.find(dir => dir.guid === guid);
-        // Открываем модальное окно с данными пользователя
-        openEditDirModal(dir);
-      });   
-    });
-   })
-  
-  
-    // .catch(error => {
-    //   console.error('Ошибка при загрузке пользователей:', error);
-    // });
-    
-  
-    // Объявляем переменную modal в глобальной области видимости
-  var modal;
-  
-  // Функция для открытия модального окна
-  function openEditDirModal(dir) {
-    // Получаем модальное окно
-    modal = document.getElementById('editDirModal');
-  
-  // Проверяем, существует ли dir
-  if (dir) {
-    // Заполняем поля формы данными пользователя
-    document.getElementById('guid').value = dir.guid || '';
-    document.getElementById('name').value = dir.name || '';
-    document.getElementById('directory').value = dir.directory || '';
-    document.getElementById('description').value = dir.description || '';
-    document.getElementById('active').value = dir.active ? 'true' : 'false';
-    document.getElementById('updateModalButton').style.display = 'block';
-    document.getElementById('dirModalTitle').innerHTML = 'Редактировать'
-  } else {
-    // Если dir не определен, очищаем поля формы
-    document.getElementById('guid').value = '';
-    document.getElementById('name').value = '';
-    document.getElementById('directory').value = '';
-    document.getElementById('description').value = '';
-    document.getElementById('active').value = ''; 
-    document.getElementById('createModalButton').style.display = 'block';
-    document.getElementById('dirModalTitle').innerHTML = 'Добавить директорию'
-  }
-    // Отображаем модальное окно
-    modal.style.display = 'block';
-  }
-  
-  
-  // Получаем кнопку закрытия модального окна
-  var closeBtn = document.getElementById("closeModalButton");
-    // Добавляем обработчик события на кнопку закрытия
-  closeBtn.addEventListener("click", function() {
-    // Скрываем модальное окно
-    modal.style.display = "none";
-  });
-  
-  
-  var okBtn = document.getElementById("updateModalButton");
-  okBtn.addEventListener("click", function() {
-   // Получаем данные из формы
-    var guid = document.getElementById('guid').value;
-    var name = document.getElementById('name').value;
-    var directory = document.getElementById('directory').value;
-    var description = document.getElementById('description').value;
-    var active = document.getElementById('active').value === 'true';
-  
-    // Создаем объект с данными   ВОПРОС
-    var data = {
-        guid: guid,
-        name: name,
-        directory: directory,
-        description: description,                 
-        active: active
-    };
-  
-    // Отправляем запрос
-    fetch(`${config.ApiUrl}/dir_update`, {
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': localStorage.getItem('authToken')
-      },
-      body: JSON.stringify(data)
+
+function handleUserInfo() {
+  fetchWithToken(`${config.ApiUrl}/check_token`, { method: 'GET' })
+    .then(response => {
+      if (!response.ok) throw new Error('Token check failed');
+      return response.json();
     })
-    .then(response => response.json())
     .then(data => {
-      console.log('Успешно:', data);
-      // Здесь можно обработать ответ от сервера, например, обновить интерфейс пользователя
-      modal.style.display = "none"; 
-      location.reload();
+      if (!data.token_valid) {
+        window.location.href = '../html/login.html';
+      } else {
+        return fetchWithToken(`${config.ApiUrl}/user_get`, { method: 'GET' });
+      }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch user info');
+      return response.json();
+    })
+    .then(data => {
+      localStorage.setItem('fio', data.fio);
+      localStorage.setItem('groups', data.groups);
+      document.getElementById('UserFIO').innerHTML = localStorage.getItem('fio');
+      document.getElementById('UserGroups').innerHTML = localStorage.getItem('groups');
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
-  });
-  
-    
-  // Получаем кнопку открытия для создания пользователя
-  var addBtn = document.getElementById("addDirModal");
-    // Добавляем обработчик события на кнопку закрытия
+}
+
+function loadDirectories() {
+  fetchWithToken(`${config.ApiUrl}/dir_get_all`, { method: 'GET' })
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch directories');
+      return response.json();
+    })
+    .then(data => {
+      const dirTable = document.createElement('table');
+      dirTable.innerHTML = `
+        <tr>
+          <th>Имя</th>
+          <th>Директория</th>
+          <th>Описание</th>
+          <th>Активный</th>
+          <th>Действие</th>
+        </tr>
+      `;
+
+      data.forEach(dir => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${dir.name}</td>
+          <td>${dir.directory}</td>
+          <td>${dir.description}</td>
+          <td>${dir.active ? 'Да' : 'Нет'}</td>
+          <td><button class="edit-dir" data-guid="${dir.guid}">Редактировать</button></td>
+        `;
+        dirTable.appendChild(row);
+      });
+
+      const dirTableContainer = document.getElementById('dirTableContainer');
+      if (dirTableContainer) {
+        dirTableContainer.innerHTML = '';
+        dirTableContainer.appendChild(dirTable);
+      }
+
+      const editButtons = document.querySelectorAll('.edit-dir');
+      editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const guid = this.dataset.guid;
+          const dir = data.find(dir => dir.guid === guid);
+          setTimeout(() => openEditDirModal(dir), 100); // Добавляем задержку
+        });
+      });
+    })
+    .catch(error => {
+      console.error('Error loading directories:', error);
+    });
+}
+
+function openEditDirModal(dir) {
+  const modal = document.getElementById('editDirModal');
+  if (!modal) {
+    console.error('Modal not found');
+    return;
+  }
+
+  const guidElement = document.getElementById('guid');
+  const nameElement = document.getElementById('name');
+  const directoryElement = document.getElementById('directory');
+  const descriptionElement = document.getElementById('description');
+  const activeElement = document.getElementById('active');
+
+  if (!guidElement || !nameElement || !directoryElement || !descriptionElement || !activeElement) {
+    console.error('One of the modal elements not found');
+    return;
+  }
+
+  if (dir) {
+    guidElement.value = dir.guid || '';
+    nameElement.value = dir.name || '';
+    directoryElement.value = dir.directory || '';
+    descriptionElement.value = dir.description || '';
+    activeElement.value = dir.active ? 'true' : 'false';
+    document.getElementById('updateModalButton').style.display = 'block';
+    document.getElementById('dirModalTitle').innerHTML = 'Редактировать';
+  } else {
+    guidElement.value = '';
+    nameElement.value = '';
+    directoryElement.value = '';
+    descriptionElement.value = '';
+    activeElement.value = '';
+    document.getElementById('createModalButton').style.display = 'block';
+    document.getElementById('dirModalTitle').innerHTML = 'Добавить директорию';
+  }
+
+  modal.style.display = 'block';
+}
+
+function setupModalButtons() {
+  const closeBtn = document.getElementById("closeModalButton");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function() {
+      const modal = document.getElementById('editDirModal');
+      if (modal) modal.style.display = "none";
+    });
+  }
+
+  const okBtn = document.getElementById("updateModalButton");
+  if (okBtn) {
+    okBtn.addEventListener("click", function() {
+      const guidElement = document.getElementById('guid');
+      const nameElement = document.getElementById('name');
+      const directoryElement = document.getElementById('directory');
+      const descriptionElement = document.getElementById('description');
+      const activeElement = document.getElementById('active');
+
+      if (!guidElement || !nameElement || !directoryElement || !descriptionElement || !activeElement) {
+        console.error('One of the elements not found');
+        return;
+      }
+
+      const data = {
+        guid: guidElement.value,
+        name: nameElement.value,
+        directory: directoryElement.value,
+        description: descriptionElement.value,
+        active: activeElement.value === 'true'
+      };
+
+      fetchWithToken(`${config.ApiUrl}/dir_update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Update failed');
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success:', data);
+        const modal = document.getElementById('editDirModal');
+        if (modal) modal.style.display = "none";
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  }
+
+  const addBtn = document.getElementById("addDirModal");
+  if (addBtn) {
     addBtn.addEventListener("click", function() {
-    openEditDirModal();
-  });
-  
-  
-  //Создание нового пользователя
-  var okBtn = document.getElementById("createModalButton");
-  okBtn.addEventListener("click", function() {
-   // Получаем данные из формы
-    var name = document.getElementById('name').value;
-    var directory = document.getElementById('directory').value;
-    var description = document.getElementById('description').value;
-    var active = document.getElementById('active').value === 'true';
-  
-     // Проверяем, заполнены ли все поля
-     if (!name || !directory || !description) {
-      alert('Все поля должны быть заполнены.');
-      return; // Прекращаем выполнение функции, если какое-либо поле не заполнено
-    }
-  
-    // Создаем объект с данными
-    var data = {
+      openEditDirModal();
+    });
+  }
+
+  const createBtn = document.getElementById("createModalButton");
+  if (createBtn) {
+    createBtn.addEventListener("click", function() {
+      const name = document.getElementById('name').value;
+      const directory = document.getElementById('directory').value;
+      const description = document.getElementById('description').value;
+      const active = document.getElementById('active').value === 'true';
+
+      if (!name || !directory || !description) {
+        alert('All fields must be filled.');
+        return;
+      }
+
+      const data = {
         name: name,
         directory: directory,
         description: description,
         active: active
-    };
-  
-    // Отправляем запрос
-    fetch(`${config.ApiUrl}/dir_create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': localStorage.getItem('authToken')
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Успешно:', data);
-      // Здесь можно обработать ответ от сервера, например, обновить интерфейс пользователя
-      modal.style.display = "none"; 
-      location.reload();
+      };
+
+      fetchWithToken(`${config.ApiUrl}/dir_create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Create failed');
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success:', data);
+        const modal = document.getElementById('editDirModal');
+        if (modal) modal.style.display = "none";
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     });
-  });
+  }
+}
+
+function exportTableToPDF() {
+  const doc = new jspdf.jsPDF();
+  const table = document.getElementById('dirTableContainer');
+  if (table) {
+    const res = doc.autoTableHtmlToJson(table);
+    doc.autoTable(res.columns, res.data);
+    doc.save('directories.pdf');
+  } else {
+    console.error('Table not found');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (checkAuthToken()) {
+    handleUserInfo();
+    loadDirectories();
+    setupModalButtons();
+  }
+});

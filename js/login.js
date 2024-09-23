@@ -27,9 +27,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     window.location.href = '../html/users.html';
   })
   .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
+    console.error('Возникла проблема с операцией выборки:', error);
 
-    alert('Login failed. Please check your credentials.');
+    alert('Ошибка входа. Пожалуйста, проверьте свои учетные данные.');
   });
 });
 
